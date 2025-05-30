@@ -1,17 +1,14 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
+import router from './router';
 import './App.css';
 
 function App() {
   return (
     <Provider store={store}>
-      <Router>
-        <div className="app">
-          {/* Router configuration will go here */}
-        </div>
-      </Router>
+      <RouterProvider router={router} />
     </Provider>
   );
         

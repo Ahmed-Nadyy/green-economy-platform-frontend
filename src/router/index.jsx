@@ -14,6 +14,8 @@ import NotFound from '../pages/NotFound';
 // Admin Pages
 import Dashboard from '../pages/Admin/Dashboard';
 import ManagePosts from '../pages/Admin/ManagePosts';
+import Login from '../pages/Admin/Login';
+import OTPVerification from '../pages/Admin/OTPVerification';
 
 const router = createBrowserRouter([
   {
@@ -29,8 +31,13 @@ const router = createBrowserRouter([
       { path: 'contact', element: <Contact /> }
     ]
   },
-  {
-    path: '/admin',
+  {    path: '/admin/login',
+    element: <Login />
+  },
+  {    path: '/admin/otp',
+    element: <OTPVerification />
+  },
+  {    path: '/admin',
     element: <AdminLayout />,
     children: [
       { index: true, element: <Dashboard /> },
