@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
-import AdminLayout from '../layouts/AdminLayout';
+import DashboardLayout from '../layouts/DashboardLayout';
 
 // Pages
 import Home from '../pages/Home';
@@ -12,10 +12,12 @@ import News from '../pages/News';
 import NotFound from '../pages/NotFound';
 
 // Admin Pages
-import Dashboard from '../pages/Admin/Dashboard';
-import ManagePosts from '../pages/Admin/ManagePosts';
 import Login from '../pages/Admin/Login';
 import OTPVerification from '../pages/Admin/OTPVerification';
+import AdminServices from '../pages/Admin/AdminServices';
+import Gallery from '../pages/Admin/Gallery';
+import Admins from '../pages/Admin/Admins';
+import Jobs from '../pages/Admin/Jobs';
 
 const router = createBrowserRouter([
   {
@@ -31,17 +33,22 @@ const router = createBrowserRouter([
       { path: 'contact', element: <Contact /> }
     ]
   },
-  {    path: '/admin/login',
+  {
+    path: '/admin/login',
     element: <Login />
   },
-  {    path: '/admin/otp',
+  {
+    path: '/admin/verify',
     element: <OTPVerification />
   },
-  {    path: '/admin',
-    element: <AdminLayout />,
+  {
+    path: '/admin',
+    element: <DashboardLayout />,
     children: [
-      { index: true, element: <Dashboard /> },
-      { path: 'posts', element: <ManagePosts /> }
+      { path: 'services', element: <AdminServices /> },
+      { path: 'gallery', element: <Gallery /> },
+      { path: 'admins', element: <Admins /> },
+      { path: 'jobs', element: <Jobs /> }
     ]
   }
 ]);
