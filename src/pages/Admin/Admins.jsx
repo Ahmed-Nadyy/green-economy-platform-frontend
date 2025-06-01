@@ -20,7 +20,7 @@ const Admins = () => {
       email: 'ahmed@example.com',
       phone: '01234567890',
       role: 'مدير',
-     
+
     },
     {
       id: 2,
@@ -28,7 +28,7 @@ const Admins = () => {
       email: 'sara@example.com',
       phone: '01234567891',
       role: 'مشرف',
-     
+
     },
 
   ];
@@ -95,7 +95,7 @@ const Admins = () => {
     <div className="container mx-auto">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-semibold text-gray-800">المسؤولين</h2>
-        <button 
+        <button
           onClick={handleOpenModal}
           className="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
         >
@@ -142,7 +142,7 @@ const Admins = () => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   <div className="flex items-center gap-3 space-x-reverse">
-                    <button 
+                    <button
                       className="text-blue-600 hover:text-blue-900"
                       onClick={() => handleOpenEditModal(admin)}
                     >
