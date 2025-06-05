@@ -1,7 +1,7 @@
 import React from "react";
-import bg1 from "../assets/contact/bg1.png";
+import bg1 from "../assets/jobs/bg1.png";
 
-const Contact = () => {
+const JobsPage = () => {
   return (
     <>
       <div className="relative min-h-screen w-full">
@@ -22,8 +22,7 @@ const Contact = () => {
             {/* Main Content */}
             <div className="bg-black bg-opacity-30 rounded-lg p-8 sm:p-12 backdrop-blur-sm">
               <h1 className="text-white text-xl sm:text-2xl lg:text-2xl leading-relaxed mb-6 font-thin" dir="rtl">
-                تواصل معنا في اي وقت ,نحن دائما هنا لمساعدتك
-
+                نادي الاقتصاد الأخضر يقدم فرص عمل الان
               </h1>
             </div>
           </div>
@@ -42,4 +41,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default JobsPage;

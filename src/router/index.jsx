@@ -6,9 +6,9 @@ import DashboardLayout from '../layouts/DashboardLayout';
 import Home from '../pages/Home';
 import About from '../pages/About';
 import Services from '../pages/Services';
-import Blog from '../pages/Blog';
+import Blog from '../pages/GalleryPage';
 import Contact from '../pages/Contact';
-import News from '../pages/News';
+import News from '../pages/JobsPage';
 import NotFound from '../pages/NotFound';
 
 // Admin Pages
@@ -18,6 +18,8 @@ import AdminServices from '../pages/Admin/AdminServices';
 import Gallery from '../pages/Admin/Gallery';
 import Admins from '../pages/Admin/Admins';
 import Jobs from '../pages/Admin/Jobs';
+import GalleryPage from '../pages/GalleryPage';
+import JobsPage from '../pages/JobsPage';
 
 const router = createBrowserRouter([
   {
@@ -28,8 +30,8 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: 'about', element: <About /> },
       { path: 'services', element: <Services /> },
-      { path: 'blog', element: <Blog /> },
-      { path: 'news', element: <News /> },
+      { path: 'gallery', element: <GalleryPage /> },
+      { path: 'jobs', element: <JobsPage /> },
       { path: 'contact', element: <Contact /> }
     ]
   },
