@@ -1,10 +1,9 @@
 import React from "react";
-import bg1 from "../assets/contact/bg1.png";
-
-const Contact = () => {
+import bg1 from "../assets/gallery/bg1.png"; 
+const GalleryPage = () => {
   return (
     <>
-      <div className="relative min-h-screen w-full">
+    <div className="relative min-h-screen w-full">
         {/* Background Image with Overlay */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -22,8 +21,7 @@ const Contact = () => {
             {/* Main Content */}
             <div className="bg-black bg-opacity-30 rounded-lg p-8 sm:p-12 backdrop-blur-sm">
               <h1 className="text-white text-xl sm:text-2xl lg:text-2xl leading-relaxed mb-6 font-thin" dir="rtl">
-                تواصل معنا في اي وقت ,نحن دائما هنا لمساعدتك
-
+                مرحبًا بك في معرض  نادي الاقتصاد الأخضر
               </h1>
             </div>
           </div>
@@ -42,4 +40,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default GalleryPage;
