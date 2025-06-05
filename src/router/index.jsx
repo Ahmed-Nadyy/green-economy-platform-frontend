@@ -18,6 +18,7 @@ import AdminServices from '../pages/Admin/AdminServices';
 import Gallery from '../pages/Admin/Gallery';
 import Admins from '../pages/Admin/Admins';
 import Jobs from '../pages/Admin/Jobs';
+import ProtectedRoute from '../helper/ProtectedRoute';
 
 const router = createBrowserRouter([
   {
@@ -43,9 +44,13 @@ const router = createBrowserRouter([
   },
   {
     path: '/admin',
-    element: <DashboardLayout />,
+    element: (
+      <ProtectedRoute allowedRoles={['admin']}>
+        <DashboardLayout />
+      </ProtectedRoute> 
+    ),
     children: [
-      { path: 'services', element: <AdminServices /> },
+      { index:true, element: <AdminServices /> },
       { path: 'gallery', element: <Gallery /> },
       { path: 'admins', element: <Admins /> },
       { path: 'jobs', element: <Jobs /> }

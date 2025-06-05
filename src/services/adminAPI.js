@@ -2,6 +2,7 @@ import api from './axios';
 
 const adminAPI = {
   getAllAdmins: () => api.get('/admins'),
+  addAdmin: (data) => api.post('/admins',data),
 
   getAdminById: (adminId) => api.get(`/admins/${adminId}`),
 

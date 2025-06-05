@@ -10,7 +10,7 @@ const DashboardLayout = () => {
       id: 'services',
       title: 'الخدمات المقدمة',
       icon: <FaServicestack className="w-6 h-6" />,
-      path: '/admin/services'
+      path: '/admin'
     },
     {
       id: 'gallery',
@@ -61,7 +61,12 @@ const DashboardLayout = () => {
           <div className="flex items-center justify-between px-6 py-4">
             <h1 className="text-2xl font-semibold text-gray-800">نادي الاقتصاد الأخضر</h1>
             <div className="flex items-center gap-4">
-              <button className="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+              <button className="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                onClick={() => {
+                  localStorage.clear();
+                  window.location.href = "/admin/login";
+                }}
+              >
                 تسجيل الخروج
               </button>
             </div>

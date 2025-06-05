@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import backgroundImage from '../../assets/background.png';
+import authAPI from '../../services/authAPI';
 
 const OTPVerification = () => {
-  const [verificationCode, setVerificationCode] = useState(['', '', '', '', '']);
+  const [verificationCode, setVerificationCode] = useState(['', '', '', '', '','']);
   const [timer, setTimer] = useState(59);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const { verifyOTP } = useAuth();
 
   useEffect(() => {
     let interval;
@@ -28,7 +28,7 @@ const OTPVerification = () => {
       setVerificationCode(newCode);
       
       // Auto-focus next input
-      if (value && index < 4) {
+      if (value && index < 5) {
         const nextInput = document.getElementById(`code-${index + 1}`);
         if (nextInput) nextInput.focus();
       }
@@ -53,15 +53,23 @@ const OTPVerification = () => {
     setError('');
 
     const code = verificationCode.join('');
-    if (code.length !== 5) {
+    if (code.length !== 6) {
       setError('الرجاء إدخال رمز التحقق كاملاً');
       setIsLoading(false);
       return;
     }
-
+   console.log(code);
+   
     try {
-      const result = await verifyOTP(code);
-      if (result.success) {
+      const result = await authAPI.verifyLogin({
+        email:localStorage.getItem('email'),
+        otp:code
+      });
+      console.log(result);
+      
+      if (result.data.status) {
+        localStorage.setItem('admin',JSON.stringify(result.data.admin))
+        localStorage.setItem('token',result.data.token)
         navigate('/admin');
       } else {
         setError('رمز التحقق غير صحيح');
@@ -73,9 +81,13 @@ const OTPVerification = () => {
     }
   };
 
-  const handleResendCode = () => {
+  const handleResendCode = async() => {
     setTimer(59);
     // Add your resend code logic here
+    await authAPI.resendOtp({
+      email:localStorage.getItem('email'),
+      type:"login"
+    })
   };
 
   return (

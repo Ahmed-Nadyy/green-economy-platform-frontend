@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaEnvelope, FaPhone, FaEdit, FaTrash, FaTimes } from 'react-icons/fa';
+import adminAPI from '../../services/adminAPI';
 
 const Admins = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,48 +14,66 @@ const Admins = () => {
     phone: ''
   });
 
-  const admins = [
-    {
-      id: 1,
-      name: 'أحمد محمد',
-      email: 'ahmed@example.com',
-      phone: '01234567890',
-      role: 'مدير',
+  // const admins = [
+  //   {
+  //     id: 1,
+  //     name: 'أحمد محمد',
+  //     email: 'ahmed@example.com',
+  //     phone: '01234567890',
+  //     role: 'مدير',
 
-    },
-    {
-      id: 2,
-      name: 'سارة أحمد',
-      email: 'sara@example.com',
-      phone: '01234567891',
-      role: 'مشرف',
+  //   },
+  //   {
+  //     id: 2,
+  //     name: 'سارة أحمد',
+  //     email: 'sara@example.com',
+  //     phone: '01234567891',
+  //     role: 'مشرف',
 
-    },
+  //   },
 
-  ];
-
+  // ];
+  const [admins,setAdmins]=useState([])
+      const fetchData=async()=>{
+     const result= await adminAPI.getAllAdmins();
+     console.log(result.data);
+     
+     setAdmins(result.data)
+    }
+  useEffect(()=>{
+    fetchData();
+  },[])
   const handleOpenModal = () => {
     setIsEditMode(false);
     setCurrentAdmin(null);
     setNewAdmin({
-      name: '',
+      fullName: '',
       email: '',
       password: '',
-      role: '',
-      phone: ''
+      job: '',
+      phoneNumber: ''
     });
     setIsModalOpen(true);
   };
+
+    const handleDelete = async(id) => {
+      console.log(id);
+      
+    await adminAPI.deleteAdmin(id);
+    fetchData();
+
+  };
+
 
   const handleOpenEditModal = (admin) => {
     setIsEditMode(true);
     setCurrentAdmin(admin);
     setNewAdmin({
-      name: admin.name,
+      name: admin.fullName,
       email: admin.email,
-      password: '', // عادة لا نعرض كلمة المرور الحالية
-      role: admin.role,
-      phone: admin.phone
+      password: '', 
+      role: admin.job,
+      phone: admin.phoneNumber
     });
     setIsModalOpen(true);
   };
@@ -80,15 +99,18 @@ const Admins = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     // هنا يمكن إضافة الكود الخاص بإرسال البيانات إلى الخادم
     if (isEditMode) {
       console.log('تم تعديل بيانات المسؤول:', newAdmin);
     } else {
-      console.log('تم إرسال بيانات المسؤول الجديد:', newAdmin);
+      console.log(newAdmin);
+      const result=await adminAPI.addAdmin(newAdmin);
+      if (result.data.status) {
+        handleCloseModal();
+      }
     }
-    handleCloseModal();
   };
 
   return (
@@ -119,7 +141,7 @@ const Admins = () => {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
                     <div className="mr-4">
-                      <div className="text-sm font-medium text-gray-900">{admin.name}</div>
+                      <div className="text-sm font-medium text-gray-900">{admin.fullName}</div>
                     </div>
                   </div>
                 </td>
@@ -131,13 +153,13 @@ const Admins = () => {
                     </div>
                     <div className="flex items-center text-sm text-gray-600">
                       <FaPhone className="ml-2" />
-                      {admin.phone}
+                      {admin.phoneNumber}
                     </div>
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                    {admin.role}
+                    {admin.job}
                   </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -148,7 +170,7 @@ const Admins = () => {
                     >
                       <FaEdit className="w-5 h-5" />
                     </button>
-                    <button className="text-red-600 hover:text-red-900">
+                    <button className="text-red-600 hover:text-red-900" onClick={() => handleDelete(admin.id)}>
                       <FaTrash className="w-5 h-5" />
                     </button>
                   </div>
@@ -187,9 +209,9 @@ const Admins = () => {
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">الاسم بالكامل</label>
                     <input
                       type="text"
-                      id="name"
-                      name="name"
-                      value={newAdmin.name}
+                      id="fullName"
+                      name="fullName"
+                      value={newAdmin.fullName}
                       onChange={handleInputChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
                       required
@@ -225,9 +247,9 @@ const Admins = () => {
                     <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-1">الوظيفة</label>
                     <input
                       type="text"
-                      id="role"
-                      name="role"
-                      value={newAdmin.role}
+                      id="job"
+                      name="job"
+                      value={newAdmin.job}
                       onChange={handleInputChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
                       required
@@ -237,9 +259,9 @@ const Admins = () => {
                     <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">رقم الهاتف</label>
                     <input
                       type="tel"
-                      id="phone"
-                      name="phone"
-                      value={newAdmin.phone}
+                      id="phoneNumber"
+                      name="phoneNumber"
+                      value={newAdmin.phoneNumber}
                       onChange={handleInputChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
                       required

@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { useAuth } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import backgroundImage from '../../assets/background.png';
+import authAPI from '../../services/authAPI';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -10,7 +10,6 @@ const Login = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,9 +17,13 @@ const Login = () => {
     setError('');
 
     try {
-      const result = await login(email, password);
-      if (result.success) {
-        navigate('/admin');
+      const result = await authAPI.login({
+      email,
+      password
+    });;
+      if (result.status) {
+        localStorage.setItem('email',email)
+        navigate('/admin/verify');
       } else {
         setError('فشل تسجيل الدخول. يرجى التحقق من بيانات الاعتماد الخاصة بك.');
       }
