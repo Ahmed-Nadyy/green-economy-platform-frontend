@@ -14,8 +14,8 @@ const Navbar = () => {
   return (
     <header className="w-full">
       {/* Top bar with social media and contact info */}
-      <div className="bg-white py-2 px-4">
-        <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center rounded-3xl shadow-xl border-2 w-full py-2 px-4 sm:px-8">
+      <div className="bg-white py-2 px-2 sm:px-4">
+        <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center rounded-3xl shadow-xl border-2 w-full py-2 px-2 sm:px-8">
           {/* Contact info - right side in RTL */}
           <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-reverse sm:space-x-4 text-center sm:text-right mb-2 sm:mb-0">
             <div className="flex items-center text-green-600">
@@ -46,9 +46,8 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      
       {/* Main navigation */}
-      <nav className="bg-[#2ECC71] py-3 px-4">
+      <nav className="bg-[#2ECC71] py-3 px-2 sm:px-4">
         <div className="container mx-auto flex justify-between items-center">
           {/* Mobile menu button */}
           <button 

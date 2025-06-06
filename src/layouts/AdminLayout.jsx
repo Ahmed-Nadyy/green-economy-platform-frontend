@@ -24,9 +24,8 @@ const AdminLayout = () => {
           <h1 className="text-2xl font-semibold text-gray-900 text-right">لوحة التحكم</h1>
         </div>
       </header>
-
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+      <main className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8 w-full">
         <Outlet />
       </main>
     </div>

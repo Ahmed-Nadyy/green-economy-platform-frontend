@@ -1,6 +1,121 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import bg1 from "../assets/gallery/bg1.png";
+
 const GalleryPage = () => {
+  // State for images
+  const [images, setImages] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [imagesLoading, setImagesLoading] = useState(true);
+  const [imagesError, setImagesError] = useState(null);
+  const [imageStartIndex, setImageStartIndex] = useState(0);
+
+  // State for videos
+  const [videos, setVideos] = useState([]);
+  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [videosLoading, setVideosLoading] = useState(true);
+  const [videosError, setVideosError] = useState(null);
+  const [videoStartIndex, setVideoStartIndex] = useState(0);
+
+  // Configuration
+  const THUMBNAILS_PER_VIEW = 6;
+  const API_BASE_URL = 'http://localhost:3001/api';
+
+  // API Functions
+  const fetchImages = async () => {
+    try {
+      setImagesLoading(true);
+      setImagesError(null);
+
+      const response = await fetch(`${API_BASE_URL}/gallery/images`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setImages(data.images || []);
+
+      // Set first image as selected if available
+      if (data.images && data.images.length > 0) {
+        setSelectedImage(data.images[0]);
+      }
+    } catch (error) {
+      console.error('Error fetching images:', error);
+      setImagesError(error.message);
+    } finally {
+      setImagesLoading(false);
+    }
+  };
+
+  const fetchVideos = async () => {
+    try {
+      setVideosLoading(true);
+      setVideosError(null);
+
+      const response = await fetch(`${API_BASE_URL}/gallery/videos`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setVideos(data.videos || []);
+
+      // Set first video as selected if available
+      if (data.videos && data.videos.length > 0) {
+        setSelectedVideo(data.videos[0]);
+      }
+    } catch (error) {
+      console.error('Error fetching videos:', error);
+      setVideosError(error.message);
+    } finally {
+      setVideosLoading(false);
+    }
+  };
+
+  // Load data on component mount
+  useEffect(() => {
+    fetchImages();
+    fetchVideos();
+  }, []);
+
+  // Navigation handlers for images
+  const handleImagePrevious = () => {
+    if (imageStartIndex > 0) {
+      setImageStartIndex(imageStartIndex - 1);
+    }
+  };
+
+  const handleImageNext = () => {
+    if (imageStartIndex + THUMBNAILS_PER_VIEW < images.length) {
+      setImageStartIndex(imageStartIndex + 1);
+    }
+  };
+
+  // Navigation handlers for videos
+  const handleVideoPrevious = () => {
+    if (videoStartIndex > 0) {
+      setVideoStartIndex(videoStartIndex - 1);
+    }
+  };
+
+  const handleVideoNext = () => {
+    if (videoStartIndex + THUMBNAILS_PER_VIEW < videos.length) {
+      setVideoStartIndex(videoStartIndex + 1);
+    }
+  };
+
+  // Get visible thumbnails
+  const visibleImages = images.slice(imageStartIndex, imageStartIndex + THUMBNAILS_PER_VIEW);
+  const visibleVideos = videos.slice(videoStartIndex, videoStartIndex + THUMBNAILS_PER_VIEW);
+
+  // Retry handlers
+  const retryImages = () => {
+    fetchImages();
+  };
+
+  const retryVideos = () => {
+    fetchVideos();
+  };
+
   return (
     <>
       <div className="relative min-h-screen w-full">
@@ -14,14 +129,13 @@ const GalleryPage = () => {
           {/* Dark overlay to reduce brightness */}
           <div className="absolute inset-0 bg-black bg-opacity-50"></div>
         </div>
-
         {/* Content Section */}
         <div className="relative z-10 flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
             {/* Main Content */}
             <div className="bg-black bg-opacity-30 rounded-lg p-8 sm:p-12 backdrop-blur-sm">
               <h1 className="text-white text-xl sm:text-2xl lg:text-2xl leading-relaxed mb-6 font-thin" dir="rtl">
-                مرحبًا بك في معرض  نادي الاقتصاد الأخضر
+                مرحبًا بك في معرض نادي الاقتصاد الأخضر
               </h1>
             </div>
           </div>
@@ -33,10 +147,9 @@ const GalleryPage = () => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
         </div>
-
-
       </div>
-      {/* Gallery Section - Crop and Field School Images */}
+
+      {/* Gallery Section - Images */}
       <section className="py-20 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
         {/* Background decorative elements */}
         <div className="absolute inset-0 opacity-5">
@@ -70,112 +183,141 @@ const GalleryPage = () => {
             </div>
           </div>
 
-          {/* Main Featured Image */}
-          <div className="mb-8">
-            <div className="relative bg-gray-200 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-96">
-              {/* Placeholder for main image */}
-              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300">
-                <div className="text-center">
-                  <div className="w-16 h-16 mx-auto mb-4 bg-green-500 rounded-lg flex items-center justify-center">
-                    <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+          {/* Images Loading State */}
+          {imagesLoading && (
+            <div className="text-center py-12">
+              <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-green-500"></div>
+              <p className="mt-4 text-gray-600">جاري تحميل الصور...</p>
+            </div>
+          )}
+
+          {/* Images Error State */}
+          {imagesError && (
+            <div className="text-center py-12">
+              <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md mx-auto">
+                <svg className="w-12 h-12 text-red-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <p className="text-red-700 mb-4">خطأ في تحميل الصور: {imagesError}</p>
+                <button
+                  onClick={retryImages}
+                  className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
+                >
+                  إعادة المحاولة
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Images Content */}
+          {!imagesLoading && !imagesError && (
+            <>
+              {/* Main Featured Image */}
+              <div className="mb-8">
+                <div className="relative bg-gray-200 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-96">
+                  {selectedImage ? (
+                    <img
+                      src={selectedImage.url}
+                      alt={selectedImage.title || 'Gallery Image'}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'flex';
+                      }}
+                    />
+                  ) : null}
+
+                  {/* Fallback placeholder */}
+                  <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300" style={{ display: selectedImage ? 'none' : 'flex' }}>
+                    <div className="text-center">
+                      <div className="w-16 h-16 mx-auto mb-4 bg-green-500 rounded-lg flex items-center justify-center">
+                        <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <p className="text-gray-500 text-sm">لا توجد صور متاحة</p>
+                    </div>
+                  </div>
+
+                  {/* Image info overlay */}
+                  {selectedImage && (
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
+                      <h3 className="text-white text-lg font-semibold" dir="rtl">
+                        {selectedImage.title || 'صورة من المعرض'}
+                      </h3>
+                      {selectedImage.description && (
+                        <p className="text-gray-200 text-sm mt-1" dir="rtl">
+                          {selectedImage.description}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Thumbnail Gallery */}
+              {images.length > 0 && (
+                <div className="relative">
+                  {/* Navigation Arrows */}
+                  <button
+                    onClick={handleImagePrevious}
+                    disabled={imageStartIndex === 0}
+                    className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center justify-center group hover:bg-green-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <svg className="w-6 h-6 text-gray-600 group-hover:text-green-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                     </svg>
-                  </div>
-                  <p className="text-gray-500 text-sm">Featured Image</p>
-                </div>
-              </div>
-            </div>
-          </div>
+                  </button>
 
-          {/* Thumbnail Gallery */}
-          <div className="relative">
-            {/* Navigation Arrows */}
-            <button className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center justify-center group hover:bg-green-50">
-              <svg className="w-6 h-6 text-gray-600 group-hover:text-green-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
+                  <button
+                    onClick={handleImageNext}
+                    disabled={imageStartIndex + THUMBNAILS_PER_VIEW >= images.length}
+                    className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center justify-center group hover:bg-green-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <svg className="w-6 h-6 text-gray-600 group-hover:text-green-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
 
-            <button className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center justify-center group hover:bg-green-50">
-              <svg className="w-6 h-6 text-gray-600 group-hover:text-green-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-
-            {/* Thumbnails Container */}
-            <div className="mx-16 overflow-hidden">
-              <div className="flex space-x-4 space-x-reverse">
-                {/* Thumbnail 1 */}
-                <div className="flex-shrink-0 w-32 h-24 bg-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer border-2 border-transparent hover:border-green-500">
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300">
-                    <div className="w-8 h-8 bg-green-500 rounded flex items-center justify-center">
-                      <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
-                      </svg>
+                  {/* Thumbnails Container */}
+                  <div className="mx-16 overflow-hidden">
+                    <div className="flex space-x-4 space-x-reverse">
+                      {visibleImages.map((image, index) => (
+                        <div
+                          key={image.id || index}
+                          onClick={() => setSelectedImage(image)}
+                          className={`flex-shrink-0 w-32 h-24 bg-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer border-2 ${selectedImage?.id === image.id ? 'border-green-500' : 'border-transparent hover:border-green-500'
+                            }`}
+                        >
+                          <img
+                            src={image.thumbnail || image.url}
+                            alt={image.title || 'Thumbnail'}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              e.target.style.display = 'none';
+                              e.target.nextSibling.style.display = 'flex';
+                            }}
+                          />
+                          {/* Fallback for failed thumbnails */}
+                          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300" style={{ display: 'none' }}>
+                            <div className="w-8 h-8 bg-green-500 rounded flex items-center justify-center">
+                              <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
-
-                {/* Thumbnail 2 */}
-                <div className="flex-shrink-0 w-32 h-24 bg-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer border-2 border-transparent hover:border-green-500">
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300">
-                    <div className="w-8 h-8 bg-green-500 rounded flex items-center justify-center">
-                      <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Thumbnail 3 */}
-                <div className="flex-shrink-0 w-32 h-24 bg-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer border-2 border-transparent hover:border-green-500">
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300">
-                    <div className="w-8 h-8 bg-green-500 rounded flex items-center justify-center">
-                      <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Thumbnail 4 */}
-                <div className="flex-shrink-0 w-32 h-24 bg-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer border-2 border-transparent hover:border-green-500">
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300">
-                    <div className="w-8 h-8 bg-green-500 rounded flex items-center justify-center">
-                      <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Thumbnail 5 */}
-                <div className="flex-shrink-0 w-32 h-24 bg-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer border-2 border-transparent hover:border-green-500">
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300">
-                    <div className="w-8 h-8 bg-green-500 rounded flex items-center justify-center">
-                      <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Thumbnail 6 */}
-                <div className="flex-shrink-0 w-32 h-24 bg-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer border-2 border-transparent hover:border-green-500">
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300">
-                    <div className="w-8 h-8 bg-green-500 rounded flex items-center justify-center">
-                      <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+              )}
+            </>
+          )}
         </div>
       </section>
-      {/* Video Gallery Section - Crop and Field School Videos */}
+
+      {/* Video Gallery Section */}
       <section className="py-20 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
         {/* Background decorative elements */}
         <div className="absolute inset-0 opacity-5">
@@ -209,243 +351,163 @@ const GalleryPage = () => {
             </div>
           </div>
 
-          {/* Main Featured Video */}
-          <div className="mb-8">
-            <div className="relative bg-gray-200 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-96 cursor-pointer group">
-              {/* Video placeholder */}
-              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300">
-                <div className="text-center">
-                  {/* Video player icon */}
-                  <div className="w-20 h-20 mx-auto mb-4 bg-green-500 rounded-lg flex items-center justify-center group-hover:bg-green-600 transition-colors duration-300 relative">
-                    {/* Film strip decoration */}
-                    <div className="absolute -top-1 left-0 right-0 h-2 bg-green-400 opacity-60">
-                      <div className="flex justify-between h-full px-1">
-                        <div className="w-1 h-full bg-white opacity-40"></div>
-                        <div className="w-1 h-full bg-white opacity-40"></div>
-                        <div className="w-1 h-full bg-white opacity-40"></div>
-                        <div className="w-1 h-full bg-white opacity-40"></div>
-                        <div className="w-1 h-full bg-white opacity-40"></div>
-                        <div className="w-1 h-full bg-white opacity-40"></div>
-                        <div className="w-1 h-full bg-white opacity-40"></div>
-                      </div>
-                    </div>
-                    <div className="absolute -bottom-1 left-0 right-0 h-2 bg-green-400 opacity-60">
-                      <div className="flex justify-between h-full px-1">
-                        <div className="w-1 h-full bg-white opacity-40"></div>
-                        <div className="w-1 h-full bg-white opacity-40"></div>
-                        <div className="w-1 h-full bg-white opacity-40"></div>
-                        <div className="w-1 h-full bg-white opacity-40"></div>
-                        <div className="w-1 h-full bg-white opacity-40"></div>
-                        <div className="w-1 h-full bg-white opacity-40"></div>
-                        <div className="w-1 h-full bg-white opacity-40"></div>
-                      </div>
-                    </div>
+          {/* Videos Loading State */}
+          {videosLoading && (
+            <div className="text-center py-12">
+              <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-green-500"></div>
+              <p className="mt-4 text-gray-600">جاري تحميل الفيديوهات...</p>
+            </div>
+          )}
 
-                    {/* Play button */}
-                    <svg className="w-10 h-10 text-white group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                    </svg>
-                  </div>
-                  <p className="text-gray-500 text-sm">Featured Video</p>
-                </div>
-              </div>
-
-              {/* Play overlay on hover */}
-              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
-                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center">
-                    <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                    </svg>
-                  </div>
-                </div>
+          {/* Videos Error State */}
+          {videosError && (
+            <div className="text-center py-12">
+              <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md mx-auto">
+                <svg className="w-12 h-12 text-red-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <p className="text-red-700 mb-4">خطأ في تحميل الفيديوهات: {videosError}</p>
+                <button
+                  onClick={retryVideos}
+                  className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
+                >
+                  إعادة المحاولة
+                </button>
               </div>
             </div>
-          </div>
+          )}
 
-          {/* Video Thumbnails Gallery */}
-          <div className="relative">
-            {/* Navigation Arrows */}
-            <button className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center justify-center group hover:bg-green-50">
-              <svg className="w-6 h-6 text-gray-600 group-hover:text-green-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
+          {/* Videos Content */}
+          {!videosLoading && !videosError && (
+            <>
+              {/* Main Featured Video */}
+              <div className="mb-8">
+                <div className="relative bg-gray-200 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-96 cursor-pointer group">
+                  {selectedVideo ? (
+                    <video
+                      controls
+                      poster={selectedVideo.thumbnail}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'flex';
+                      }}
+                    >
+                      <source src={selectedVideo.url} type="video/mp4" />
+                      <source src={selectedVideo.url} type="video/webm" />
+                      Your browser does not support the video tag.
+                    </video>
+                  ) : null}
 
-            <button className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center justify-center group hover:bg-green-50">
-              <svg className="w-6 h-6 text-gray-600 group-hover:text-green-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-
-            {/* Video Thumbnails Container */}
-            <div className="mx-16 overflow-hidden">
-              <div className="flex space-x-4 space-x-reverse">
-                {/* Video Thumbnail 1 */}
-                <div className="flex-shrink-0 w-32 h-24 bg-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer border-2 border-transparent hover:border-green-500 group relative">
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300">
-                    <div className="w-12 h-12 bg-green-500 rounded flex items-center justify-center relative group-hover:bg-green-600 transition-colors duration-300">
-                      {/* Mini film strip */}
-                      <div className="absolute -top-0.5 left-0 right-0 h-1 bg-green-400 opacity-60">
-                        <div className="flex justify-between h-full px-0.5">
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                        </div>
+                  {/* Fallback placeholder */}
+                  <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300" style={{ display: selectedVideo ? 'none' : 'flex' }}>
+                    <div className="text-center">
+                      <div className="w-20 h-20 mx-auto mb-4 bg-green-500 rounded-lg flex items-center justify-center relative">
+                        <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                        </svg>
                       </div>
-                      <div className="absolute -bottom-0.5 left-0 right-0 h-1 bg-green-400 opacity-60">
-                        <div className="flex justify-between h-full px-0.5">
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                        </div>
-                      </div>
-                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                      </svg>
+                      <p className="text-gray-500 text-sm">لا توجد فيديوهات متاحة</p>
                     </div>
                   </div>
-                </div>
 
-                {/* Video Thumbnail 2 */}
-                <div className="flex-shrink-0 w-32 h-24 bg-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer border-2 border-transparent hover:border-green-500 group relative">
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300">
-                    <div className="w-12 h-12 bg-green-500 rounded flex items-center justify-center relative group-hover:bg-green-600 transition-colors duration-300">
-                      <div className="absolute -top-0.5 left-0 right-0 h-1 bg-green-400 opacity-60">
-                        <div className="flex justify-between h-full px-0.5">
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                        </div>
-                      </div>
-                      <div className="absolute -bottom-0.5 left-0 right-0 h-1 bg-green-400 opacity-60">
-                        <div className="flex justify-between h-full px-0.5">
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                        </div>
-                      </div>
-                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                      </svg>
+                  {/* Video info overlay */}
+                  {selectedVideo && (
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
+                      <h3 className="text-white text-lg font-semibold" dir="rtl">
+                        {selectedVideo.title || 'فيديو من المعرض'}
+                      </h3>
+                      {selectedVideo.description && (
+                        <p className="text-gray-200 text-sm mt-1" dir="rtl">
+                          {selectedVideo.description}
+                        </p>
+                      )}
+                      {selectedVideo.duration && (
+                        <span className="inline-block bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded mt-2">
+                          {selectedVideo.duration}
+                        </span>
+                      )}
                     </div>
-                  </div>
-                </div>
-
-                {/* Video Thumbnail 3 */}
-                <div className="flex-shrink-0 w-32 h-24 bg-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer border-2 border-transparent hover:border-green-500 group relative">
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300">
-                    <div className="w-12 h-12 bg-green-500 rounded flex items-center justify-center relative group-hover:bg-green-600 transition-colors duration-300">
-                      <div className="absolute -top-0.5 left-0 right-0 h-1 bg-green-400 opacity-60">
-                        <div className="flex justify-between h-full px-0.5">
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                        </div>
-                      </div>
-                      <div className="absolute -bottom-0.5 left-0 right-0 h-1 bg-green-400 opacity-60">
-                        <div className="flex justify-between h-full px-0.5">
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                        </div>
-                      </div>
-                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Video Thumbnail 4 */}
-                <div className="flex-shrink-0 w-32 h-24 bg-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer border-2 border-transparent hover:border-green-500 group relative">
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300">
-                    <div className="w-12 h-12 bg-green-500 rounded flex items-center justify-center relative group-hover:bg-green-600 transition-colors duration-300">
-                      <div className="absolute -top-0.5 left-0 right-0 h-1 bg-green-400 opacity-60">
-                        <div className="flex justify-between h-full px-0.5">
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                        </div>
-                      </div>
-                      <div className="absolute -bottom-0.5 left-0 right-0 h-1 bg-green-400 opacity-60">
-                        <div className="flex justify-between h-full px-0.5">
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                        </div>
-                      </div>
-                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Video Thumbnail 5 */}
-                <div className="flex-shrink-0 w-32 h-24 bg-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer border-2 border-transparent hover:border-green-500 group relative">
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300">
-                    <div className="w-12 h-12 bg-green-500 rounded flex items-center justify-center relative group-hover:bg-green-600 transition-colors duration-300">
-                      <div className="absolute -top-0.5 left-0 right-0 h-1 bg-green-400 opacity-60">
-                        <div className="flex justify-between h-full px-0.5">
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                        </div>
-                      </div>
-                      <div className="absolute -bottom-0.5 left-0 right-0 h-1 bg-green-400 opacity-60">
-                        <div className="flex justify-between h-full px-0.5">
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                        </div>
-                      </div>
-                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Video Thumbnail 6 */}
-                <div className="flex-shrink-0 w-32 h-24 bg-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer border-2 border-transparent hover:border-green-500 group relative">
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300">
-                    <div className="w-12 h-12 bg-green-500 rounded flex items-center justify-center relative group-hover:bg-green-600 transition-colors duration-300">
-                      <div className="absolute -top-0.5 left-0 right-0 h-1 bg-green-400 opacity-60">
-                        <div className="flex justify-between h-full px-0.5">
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                        </div>
-                      </div>
-                      <div className="absolute -bottom-0.5 left-0 right-0 h-1 bg-green-400 opacity-60">
-                        <div className="flex justify-between h-full px-0.5">
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                          <div className="w-0.5 h-full bg-white opacity-40"></div>
-                        </div>
-                      </div>
-                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                      </svg>
-                    </div>
-                  </div>
+                  )}
                 </div>
               </div>
-            </div>
-          </div>
+
+              {/* Video Thumbnails Gallery */}
+              {videos.length > 0 && (
+                <div className="relative">
+                  {/* Navigation Arrows */}
+                  <button
+                    onClick={handleVideoPrevious}
+                    disabled={videoStartIndex === 0}
+                    className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center justify-center group hover:bg-green-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <svg className="w-6 h-6 text-gray-600 group-hover:text-green-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                  </button>
+
+                  <button
+                    onClick={handleVideoNext}
+                    disabled={videoStartIndex + THUMBNAILS_PER_VIEW >= videos.length}
+                    className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center justify-center group hover:bg-green-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <svg className="w-6 h-6 text-gray-600 group-hover:text-green-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+
+                  {/* Video Thumbnails Container */}
+                  <div className="mx-16 overflow-hidden">
+                    <div className="flex space-x-4 space-x-reverse">
+                      {visibleVideos.map((video, index) => (
+                        <div
+                          key={video.id || index}
+                          onClick={() => setSelectedVideo(video)}
+                          className={`flex-shrink-0 w-32 h-24 bg-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer border-2 group relative ${selectedVideo?.id === video.id ? 'border-green-500' : 'border-transparent hover:border-green-500'
+                            }`}
+                        >
+                          <img
+                            src={video.thumbnail}
+                            alt={video.title || 'Video Thumbnail'}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              e.target.style.display = 'none';
+                              e.target.nextSibling.style.display = 'flex';
+                            }}
+                          />
+
+                          {/* Fallback for failed thumbnails */}
+                          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300" style={{ display: 'none' }}>
+                            <div className="w-12 h-12 bg-green-500 rounded flex items-center justify-center relative">
+                              <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                              </svg>
+                            </div>
+                          </div>
+
+                          {/* Play overlay */}
+                          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-30">
+                            <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                              <svg className="w-4 h-4 text-white ml-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                              </svg>
+                            </div>
+                          </div>
+
+                          {/* Duration overlay */}
+                          {video.duration && (
+                            <div className="absolute bottom-1 right-1 bg-black bg-opacity-70 text-white text-xs px-1 py-0.5 rounded">
+                              {video.duration}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
         </div>
       </section>
     </>
