@@ -21,6 +21,8 @@ import Jobs from '../pages/Admin/Jobs';
 import ProtectedRoute from '../helper/ProtectedRoute';
 import GalleryPage from '../pages/GalleryPage';
 import JobsPage from '../pages/JobsPage';
+import CropDetailsPage from '../pages/Services/ui/CropDetailsPage';
+import ArticleDetailsPage from '../pages/Services/ui/ArticleDetailsPage';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +33,8 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: 'about', element: <About /> },
       { path: 'services', element: <Services /> },
+      { path: 'services/crop/:id', element: <CropDetailsPage /> },
+      { path: 'services/article/:id', element: <ArticleDetailsPage /> },
       { path: 'gallery', element: <GalleryPage /> },
       { path: 'jobs', element: <JobsPage /> },
       { path: 'contact', element: <Contact /> }
