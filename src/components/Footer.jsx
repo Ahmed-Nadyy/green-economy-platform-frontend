@@ -96,7 +96,7 @@ const Footer = () => {
           <div className="flex flex-col-reverse sm:flex-row justify-between items-center">
             {/* Social media icons */}
             <div className="flex space-x-3 sm:space-x-4 mt-3 sm:mt-0">
-              <Link to="#" className="bg-white text-[#2ECC71] p-1.5 sm:p-2 rounded-full hover:bg-gray-100 transition-transform hover:scale-105">
+              <Link to="#" className="bg-white ml-4 text-[#2ECC71] p-1.5 sm:p-2 rounded-full hover:bg-gray-100 transition-transform hover:scale-105">
                 <FaYoutube size={16} className="sm:w-5 sm:h-5" />
               </Link>
               <Link to="#" className="bg-white text-[#2ECC71] p-1.5 sm:p-2 rounded-full hover:bg-gray-100 transition-transform hover:scale-105">
