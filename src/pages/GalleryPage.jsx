@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import bg1 from "../assets/gallery/bg1.png";
+import SectionHeader from "./Services/ui/SectionHeader";
 
 const GalleryPage = () => {
   // State for images
@@ -158,30 +159,7 @@ const GalleryPage = () => {
           <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-green-600 rounded-full blur-2xl"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          {/* Section Title */}
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center">
-              {/* Left decorative lines */}
-              <div className="flex space-x-1 mr-4">
-                <div className="w-1 h-12 bg-green-500"></div>
-                <div className="w-1 h-12 bg-green-500"></div>
-                <div className="w-1 h-12 bg-green-500"></div>
-              </div>
-
-              {/* Title */}
-              <h2 className="text-3xl font-bold text-white bg-green-500 px-8 py-3 rounded" dir="rtl">
-                صور عن زراعة المحاصيل والمدارس الحقلية
-              </h2>
-
-              {/* Right decorative lines */}
-              <div className="flex space-x-1 ml-4">
-                <div className="w-1 h-12 bg-green-500"></div>
-                <div className="w-1 h-12 bg-green-500"></div>
-                <div className="w-1 h-12 bg-green-500"></div>
-              </div>
-            </div>
-          </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">          <SectionHeader title="صور عن زراعة المحاصيل والمدارس الحقلية" />
 
           {/* Images Loading State */}
           {imagesLoading && (
@@ -326,30 +304,7 @@ const GalleryPage = () => {
           <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-green-600 rounded-full blur-2xl"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          {/* Section Title */}
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center">
-              {/* Left decorative lines */}
-              <div className="flex space-x-1 mr-4">
-                <div className="w-1 h-12 bg-green-500"></div>
-                <div className="w-1 h-12 bg-green-500"></div>
-                <div className="w-1 h-12 bg-green-500"></div>
-              </div>
-
-              {/* Title */}
-              <h2 className="text-3xl font-bold text-white bg-green-500 px-8 py-3 rounded" dir="rtl">
-                فيديوهات عن زراعة المحاصيل والمدارس الحقلية
-              </h2>
-
-              {/* Right decorative lines */}
-              <div className="flex space-x-1 ml-4">
-                <div className="w-1 h-12 bg-green-500"></div>
-                <div className="w-1 h-12 bg-green-500"></div>
-                <div className="w-1 h-12 bg-green-500"></div>
-              </div>
-            </div>
-          </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">          <SectionHeader title="فيديوهات عن زراعة المحاصيل والمدارس الحقلية" />
 
           {/* Videos Loading State */}
           {videosLoading && (

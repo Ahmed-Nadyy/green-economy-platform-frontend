@@ -6,6 +6,7 @@ import cefd from "../assets/home/cefd.png";
 import opi from "../assets/home/opi.png";
 import agri from "../assets/home/agri.png";
 import creativa from "../assets/home/creativa.png";
+import SectionHeader from "./Services/ui/SectionHeader";
 
 const Home = () => {
 
@@ -50,29 +51,7 @@ const Home = () => {
       {/* Partners Section */}
       <section className="py-8 sm:py-12 md:py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-          {/* Section Title */}
-          <div className="text-center mb-8 sm:mb-10 md:mb-12">
-            <div className="flex items-center justify-center">
-              {/* Left decorative lines - Hidden on very small screens */}
-              <div className="hidden xs:flex space-x-1 mr-2 sm:mr-4">
-                <div className="w-0.5 sm:w-1 h-8 sm:h-10 md:h-12 bg-green-500"></div>
-                <div className="w-0.5 sm:w-1 h-8 sm:h-10 md:h-12 bg-green-500"></div>
-                <div className="w-0.5 sm:w-1 h-8 sm:h-10 md:h-12 bg-green-500"></div>
-              </div>
-
-              {/* Title */}
-              <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white bg-green-500 px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded" dir="rtl">
-                شركاؤنا
-              </h2>
-
-              {/* Right decorative lines - Hidden on very small screens */}
-              <div className="hidden xs:flex space-x-1 ml-2 sm:ml-4">
-                <div className="w-0.5 sm:w-1 h-8 sm:h-10 md:h-12 bg-green-500"></div>
-                <div className="w-0.5 sm:w-1 h-8 sm:h-10 md:h-12 bg-green-500"></div>
-                <div className="w-0.5 sm:w-1 h-8 sm:h-10 md:h-12 bg-green-500"></div>
-              </div>
-            </div>
-          </div>
+          <SectionHeader title="شركاؤنا" />
 
           {/* Partners Grid */}
           <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 items-center justify-items-center">
@@ -130,12 +109,7 @@ const Home = () => {
 
         {/* Content */}
         <div className="relative z-10 max-w-6xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-          {/* Section Title */}
-          <div className="text-center mb-8 sm:mb-10 md:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6 md:mb-8" dir="rtl">
-              كلمة المؤسسة
-            </h2>
-          </div>
+          <SectionHeader title="كلمة المؤسسة" />
 
           {/* Message Content */}
           <div className="bg-black bg-opacity-40 rounded-lg p-4 sm:p-6 md:p-8 lg:p-12 backdrop-blur-sm">
@@ -163,27 +137,7 @@ const Home = () => {
 
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-8 sm:mb-10 md:mb-12">
-            {/* Section Title */}
-            <div className="flex items-center justify-center">
-              {/* Left decorative lines - Hidden on very small screens */}
-              <div className="hidden xs:flex space-x-1 mr-2 sm:mr-4">
-                <div className="w-0.5 sm:w-1 h-8 sm:h-10 md:h-12 bg-green-500"></div>
-                <div className="w-0.5 sm:w-1 h-8 sm:h-10 md:h-12 bg-green-500"></div>
-                <div className="w-0.5 sm:w-1 h-8 sm:h-10 md:h-12 bg-green-500"></div>
-              </div>
-
-              {/* Title */}
-              <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white bg-green-500 px-3 sm:px-6 md:px-8 py-2 sm:py-3 rounded text-center" dir="rtl">
-                أهمية منصة نادي الاقتصاد الأخضر
-              </h2>
-
-              {/* Right decorative lines - Hidden on very small screens */}
-              <div className="hidden xs:flex space-x-1 ml-2 sm:ml-4">
-                <div className="w-0.5 sm:w-1 h-8 sm:h-10 md:h-12 bg-green-500"></div>
-                <div className="w-0.5 sm:w-1 h-8 sm:h-10 md:h-12 bg-green-500"></div>
-                <div className="w-0.5 sm:w-1 h-8 sm:h-10 md:h-12 bg-green-500"></div>
-              </div>
-            </div>
+            <SectionHeader title="أهمية منصة نادي الاقتصاد الأخضر" />
           </div>
 
           {/* Features Grid */}
@@ -321,11 +275,12 @@ const Home = () => {
         {/* Content */}
         <div className="relative z-10 max-w-6xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
           {/* Section Title */}
-          <div className="text-center mb-12 sm:mb-14 md:mb-16">
+          {/* <div className="text-center mb-12 sm:mb-14 md:mb-16">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 sm:mb-10 md:mb-12 tracking-wide" dir="rtl">
               أهدافنا
             </h2>
-          </div>
+          </div> */}
+          <SectionHeader title="أهدافنا" />
 
           {/* Goals Content */}
           <div className="flex justify-center">
