@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import bg1 from "../assets/gallery/bg1.png";
+import galleryAPI from "../services/galleryAPI";
 
 const GalleryPage = () => {
   // State for images
@@ -17,64 +18,52 @@ const GalleryPage = () => {
   const [videoStartIndex, setVideoStartIndex] = useState(0);
 
   // Configuration
-  const THUMBNAILS_PER_VIEW = 6;
-  const API_BASE_URL = 'http://localhost:3001/api';
+const isSmallScreen = window.innerWidth < 768;
+const THUMBNAILS_PER_VIEW = isSmallScreen ? 3 : 6;
+
 
   // API Functions
-  const fetchImages = async () => {
+  const fetchGallery = async () => {
     try {
       setImagesLoading(true);
-      setImagesError(null);
-
-      const response = await fetch(`${API_BASE_URL}/gallery/images`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      setImages(data.images || []);
-
-      // Set first image as selected if available
-      if (data.images && data.images.length > 0) {
-        setSelectedImage(data.images[0]);
-      }
-    } catch (error) {
-      console.error('Error fetching images:', error);
-      setImagesError(error.message);
-    } finally {
-      setImagesLoading(false);
-    }
-  };
-
-  const fetchVideos = async () => {
-    try {
       setVideosLoading(true);
+      setImagesError(null);
       setVideosError(null);
 
-      const response = await fetch(`${API_BASE_URL}/gallery/videos`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      const { data } = await galleryAPI.getAllGalleryItems();
+
+      const allItems = data || [];
+
+      const imageItems = allItems.filter(item => item.type === "image");
+      const videoItems = allItems.filter(item => item.type === "video");
+
+      setImages(imageItems);
+      setVideos(videoItems);
+      console.log(videoItems);
+
+
+      if (imageItems.length > 0) {
+        setSelectedImage(imageItems[0]);
       }
 
-      const data = await response.json();
-      setVideos(data.videos || []);
-
-      // Set first video as selected if available
-      if (data.videos && data.videos.length > 0) {
-        setSelectedVideo(data.videos[0]);
+      if (videoItems.length > 0) {
+        setSelectedVideo(videoItems[0]);
       }
+
     } catch (error) {
-      console.error('Error fetching videos:', error);
+      console.error('Error fetching gallery data:', error);
+      setImagesError(error.message);
       setVideosError(error.message);
     } finally {
+      setImagesLoading(false);
       setVideosLoading(false);
     }
   };
 
+
   // Load data on component mount
   useEffect(() => {
-    fetchImages();
-    fetchVideos();
+    fetchGallery();
   }, []);
 
   // Navigation handlers for images
@@ -108,14 +97,9 @@ const GalleryPage = () => {
   const visibleVideos = videos.slice(videoStartIndex, videoStartIndex + THUMBNAILS_PER_VIEW);
 
   // Retry handlers
-  const retryImages = () => {
-    fetchImages();
+  const retryGallery = () => {
+    fetchGallery();
   };
-
-  const retryVideos = () => {
-    fetchVideos();
-  };
-
   return (
     <>
       <div className="relative min-h-screen w-full">
@@ -200,7 +184,7 @@ const GalleryPage = () => {
                 </svg>
                 <p className="text-red-700 mb-4">خطأ في تحميل الصور: {imagesError}</p>
                 <button
-                  onClick={retryImages}
+                  onClick={retryGallery}
                   className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
                 >
                   إعادة المحاولة
@@ -214,7 +198,7 @@ const GalleryPage = () => {
             <>
               {/* Main Featured Image */}
               <div className="mb-8">
-                <div className="relative bg-gray-200 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-96">
+                <div className="relative bg-gray-200 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300" style={{ height: "30rem" }}>
                   {selectedImage ? (
                     <img
                       src={selectedImage.url}
@@ -281,7 +265,7 @@ const GalleryPage = () => {
 
                   {/* Thumbnails Container */}
                   <div className="mx-16 overflow-hidden">
-                    <div className="flex space-x-4 space-x-reverse">
+                    <div className="flex space-x-4 space-x-reverse justify-center">
                       {visibleImages.map((image, index) => (
                         <div
                           key={image.id || index}
@@ -368,7 +352,7 @@ const GalleryPage = () => {
                 </svg>
                 <p className="text-red-700 mb-4">خطأ في تحميل الفيديوهات: {videosError}</p>
                 <button
-                  onClick={retryVideos}
+                  onClick={retryGallery}
                   className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
                 >
                   إعادة المحاولة
@@ -382,11 +366,11 @@ const GalleryPage = () => {
             <>
               {/* Main Featured Video */}
               <div className="mb-8">
-                <div className="relative bg-gray-200 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-96 cursor-pointer group">
+                <div className="relative bg-gray-200 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300  cursor-pointer group" style={{ height: "30rem" }}>
                   {selectedVideo ? (
                     <video
+                      key={selectedVideo.url} // 👈 إجبار الفيديو على إعادة التحميل عند التغيير
                       controls
-                      poster={selectedVideo.thumbnail}
                       className="w-full h-full object-cover"
                       onError={(e) => {
                         e.target.style.display = 'none';
@@ -394,10 +378,10 @@ const GalleryPage = () => {
                       }}
                     >
                       <source src={selectedVideo.url} type="video/mp4" />
-                      <source src={selectedVideo.url} type="video/webm" />
                       Your browser does not support the video tag.
                     </video>
                   ) : null}
+
 
                   {/* Fallback placeholder */}
                   <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300" style={{ display: selectedVideo ? 'none' : 'flex' }}>
@@ -458,7 +442,7 @@ const GalleryPage = () => {
 
                   {/* Video Thumbnails Container */}
                   <div className="mx-16 overflow-hidden">
-                    <div className="flex space-x-4 space-x-reverse">
+                    <div className="flex space-x-4 space-x-reverse justify-center">
                       {visibleVideos.map((video, index) => (
                         <div
                           key={video.id || index}
@@ -467,7 +451,7 @@ const GalleryPage = () => {
                             }`}
                         >
                           <img
-                            src={video.thumbnail}
+                            src={video.url}
                             alt={video.title || 'Video Thumbnail'}
                             className="w-full h-full object-cover"
                             onError={(e) => {

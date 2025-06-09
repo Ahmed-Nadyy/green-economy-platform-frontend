@@ -1,26 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ServiceCard from './ui/ServiceCard';
 import SectionHeader from './ui/SectionHeader';
+import cropAPI from '../../services/cropAPI';
 
 const CropsSection = () => {
-    const crops = [
-        {
-            title: 'محصول الطماطم',
-            imageSrc: 'https://images.pexels.com/photos/533280/pexels-photo-533280.jpeg?auto=compress&cs=tinysrgb&w=600',
-            bgColor: 'bg-green-500',
-        },
-        {
-            title: 'محصول الموز',
-            imageSrc: 'https://images.pexels.com/photos/1093038/pexels-photo-1093038.jpeg?auto=compress&cs=tinysrgb&w=600',
-            bgColor: 'bg-green-400',
-            variant: 'curved',
-        },
-        {
-            title: 'محصول القصب',
-            imageSrc: 'https://images.pexels.com/photos/17138071/pexels-photo-17138071/free-photo-of-agriculture-farm-field-growth.jpeg?auto=compress&cs=tinysrgb&w=600',
-            bgColor: 'bg-green-500',
-        }
-    ];
+    const [crops, setCrops] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchCrops = async () => {
+            try {
+                const response = await cropAPI.getAllCrops();
+                console.log(response);
+                
+                setCrops(response.data); // Assuming response contains an array of crops
+                setLoading(false);
+            } catch (err) {
+                setError('Failed to load crops');
+                setLoading(false);
+            }
+        };
+
+        fetchCrops();
+    }, []);
+
+    if (loading) {
+        return <div>جاري تحميل المحاصيل...</div>;
+    }
+
+    if (error) {
+        return <div>{error}</div>;
+    }
 
     return (
         <section className="py-16 bg-gray-50" id="crops">
@@ -29,12 +40,11 @@ const CropsSection = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {crops.map((crop, index) => (
                         <ServiceCard
-                            key={index}
+                            key={crop.id || index} // Assuming crop object has an 'id' field
                             cardIndex={index}
                             title={crop.title}
-                            imageSrc={crop.imageSrc}
-                            variant={crop.variant}
-                            bgColor={crop.bgColor}
+                            imageSrc={`${import.meta.env.VITE_API_URL_FRONT}${crop.imageUrl}`}
+                            bgColor="bg-green-500" // Or dynamic bgColor based on crop
                             linkText="اقرأ المزيد"
                         />
                     ))}
@@ -44,4 +54,4 @@ const CropsSection = () => {
     );
 };
 
-export default CropsSection;    
+export default CropsSection;

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import bg1 from "../assets/jobs/bg1.png";
+import jobRequestAPI from "../services/jobRequestAPI";
+import { toast } from "react-toastify";
 
 const JobsPage = () => {
-
   const [formData, setFormData] = useState({
     fullName: '',
     phoneNumber: '',
@@ -20,9 +21,25 @@ const JobsPage = () => {
     }));
   };
 
-  const handleSubmit = () => {
-    console.log('Form submitted:', formData);
-    // Handle form submission logic here
+  const handleSubmit = async () => {
+    try {
+      const { data } = await jobRequestAPI.createJobRequest(formData);
+      console.log('Form submitted:', data);
+      toast.success("تم إرسال الطلب بنجاح! ✅", { position: "top-center" });
+
+      // إعادة تعيين النموذج
+      setFormData({
+        fullName: '',
+        phoneNumber: '',
+        preferredJobTitle: '',
+        yearsOfExperience: '',
+        email: '',
+        contactNumber: ''
+      });
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast.error("حدث خطأ أثناء إرسال الطلب ❌", { position: "top-center" });
+    }
   };
   return (
     <>

@@ -6,7 +6,8 @@ const DashboardLayout = () => {
   const [activeLink, setActiveLink] = useState('services');
   // Sidebar state for mobile
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+ const user=JSON.parse(localStorage.getItem("admin"))
+ 
   const navLinks = [
     {
       id: 'services',
@@ -149,7 +150,9 @@ const DashboardLayout = () => {
               >
                 <span className="text-2xl">☰</span>
               </button>
-              <h1 className="text-xl sm:text-2xl font-semibold text-gray-800 text-right">نادي الاقتصاد الأخضر</h1>
+              <h1 className="text-sm sm:text-xl font-semibold text-gray-800 text-right">
+                <span className='text-green-600'>أهلا</span> {user.fullName}
+              </h1>
             </div>
           </div>
         </header>
