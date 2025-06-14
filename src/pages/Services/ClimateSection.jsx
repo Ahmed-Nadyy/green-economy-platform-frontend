@@ -15,7 +15,7 @@ const ClimateSection = () => {
                 setclimateItems(response.data); // Assuming response contains an array of items
                 setLoading(false);
             } catch (err) {
-                setError('فشل تحميل التوجيهات');
+                setError(err);
                 setLoading(false);
             }
         };
@@ -38,15 +38,16 @@ const ClimateSection = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                     {climateItems.map((item, index) => (
                         <ServiceCard
-                            key={index}
+                            key={item.id}
                             cardIndex={index}
                             title={item.arabicTitle}
                             imageSrc={`${import.meta.env.VITE_API_URL_FRONT}${item.imageUrl}`}
                             variant={item.variant}
                             secondaryText={item.secondaryText}
                             linkText="اقرأ المزيد"
+                            item={item}
+                            type="article"
                         />
-
                     ))}
                 </div>
             </div>

@@ -13,8 +13,7 @@ const CropsSection = () => {
             try {
                 const response = await cropAPI.getAllCrops();
                 console.log(response);
-                
-                setCrops(response.data); // Assuming response contains an array of crops
+                setCrops(response.data);
                 setLoading(false);
             } catch (err) {
                 setError('Failed to load crops');
@@ -34,18 +33,20 @@ const CropsSection = () => {
     }
 
     return (
-        <section className="py-16 bg-gray-50" id="crops">
+        <section className="py-16 bg-white" id="crops">
             <div className="container mx-auto px-4">
-                <SectionHeader title="المحاصيل الزراعية" />
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <SectionHeader title="تعرف على المحاصيل الزراعية" />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {crops.map((crop, index) => (
                         <ServiceCard
-                            key={crop.id || index} // Assuming crop object has an 'id' field
+                            key={crop.id}
                             cardIndex={index}
                             title={crop.arabicTitle}
                             imageSrc={`${import.meta.env.VITE_API_URL_FRONT}${crop.imageUrl}`}
-                            bgColor="bg-green-500" // Or dynamic bgColor based on crop
+                            bgColor="bg-green-500"
                             linkText="اقرأ المزيد"
+                            item={crop}
+                            type="crop"
                         />
                     ))}
                 </div>

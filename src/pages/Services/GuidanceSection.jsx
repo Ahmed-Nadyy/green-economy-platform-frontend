@@ -31,6 +31,7 @@ const GuidanceSection = () => {
         return <div>{error}</div>;
     }
 
+
     return (
         <section className="py-16 bg-white" id="guidance">
             <div className="container mx-auto px-4">
@@ -46,6 +47,8 @@ const GuidanceSection = () => {
                             bgColor={item.bgColor}
                             secondaryText={item.secondaryText}
                             linkText="المزيد"
+                            item={item}
+                            type="article"
                         />
                     ))}
                 </div>
