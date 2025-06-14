@@ -6,8 +6,11 @@ import cefd from "../assets/home/cefd.png";
 import opi from "../assets/home/opi.png";
 import agri from "../assets/home/agri.png";
 import creativa from "../assets/home/creativa.png";
+import SectionHeader from "./Services/ui/SectionHeader";
+import { useTranslation } from "react-i18next";
 
 const Home = () => {
+  const { t } = useTranslation();
 
 
   return (
@@ -30,10 +33,8 @@ const Home = () => {
             {/* Main Content */}
             <div className="bg-black bg-opacity-30 rounded-lg p-4 sm:p-6 md:p-8 lg:p-12 backdrop-blur-sm">
               <h1 className="text-white text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl leading-relaxed mb-4 sm:mb-6 font-thin" dir="rtl">
-                منصة نادي الاقتصاد الأخضر مركزا للابتكار الإبداعي في مجال قطاع الزراعة وهي
-                منصة الكترونية تربط بين مختلف أطراف القطاع الزراعي، مثل المزارعين، والتجار،
-                والموردين، والمستهلكين وتوفر مجموعة متنوعة من الخدمات، مثل تبادل
-                المعلومات، والتجارة الإلكترونية، والتمويل، والإرشاد الزراعي
+
+                {t("The Green Economy Club platform is a hub for creative innovation in the agricultural sector. It is an electronic platform that connects various stakeholders in the agricultural sector, such as farmers, traders, suppliers, and consumers, and provides a variety of services, such as information exchange, e-commerce, financing, and agricultural guidance.")}
               </h1>
             </div>
           </div>
@@ -50,29 +51,7 @@ const Home = () => {
       {/* Partners Section */}
       <section className="py-8 sm:py-12 md:py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-          {/* Section Title */}
-          <div className="text-center mb-8 sm:mb-10 md:mb-12">
-            <div className="flex items-center justify-center">
-              {/* Left decorative lines - Hidden on very small screens */}
-              <div className="hidden xs:flex space-x-1 mr-2 sm:mr-4">
-                <div className="w-0.5 sm:w-1 h-8 sm:h-10 md:h-12 bg-green-500"></div>
-                <div className="w-0.5 sm:w-1 h-8 sm:h-10 md:h-12 bg-green-500"></div>
-                <div className="w-0.5 sm:w-1 h-8 sm:h-10 md:h-12 bg-green-500"></div>
-              </div>
-
-              {/* Title */}
-              <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white bg-green-500 px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded" dir="rtl">
-                شركاؤنا
-              </h2>
-
-              {/* Right decorative lines - Hidden on very small screens */}
-              <div className="hidden xs:flex space-x-1 ml-2 sm:ml-4">
-                <div className="w-0.5 sm:w-1 h-8 sm:h-10 md:h-12 bg-green-500"></div>
-                <div className="w-0.5 sm:w-1 h-8 sm:h-10 md:h-12 bg-green-500"></div>
-                <div className="w-0.5 sm:w-1 h-8 sm:h-10 md:h-12 bg-green-500"></div>
-              </div>
-            </div>
-          </div>
+          <SectionHeader title={t("Our Partners")} />
 
           {/* Partners Grid */}
           <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 items-center justify-items-center">
@@ -130,22 +109,17 @@ const Home = () => {
 
         {/* Content */}
         <div className="relative z-10 max-w-6xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-          {/* Section Title */}
-          <div className="text-center mb-8 sm:mb-10 md:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6 md:mb-8" dir="rtl">
-              كلمة المؤسسة
-            </h2>
-          </div>
+          <SectionHeader title={t("Foundation's word")} />
 
           {/* Message Content */}
           <div className="bg-black bg-opacity-40 rounded-lg p-4 sm:p-6 md:p-8 lg:p-12 backdrop-blur-sm">
             <div className="text-white text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed space-y-4 sm:space-y-6" dir="rtl">
               <p>
-                في عصر التحول الرقمي، أصبحت المنصات الإلكترونية الزراعية أدوات لا غنى عنها لتطوير القطاع الزراعي وتحقيق الأمن الغذائي. حيث تعمل هذه المنصات على ربط المزارعين والتجار والمستهلكين، وتوفير مجموعة متنوعة من الخدمات التي تساهم في تحسين الإنتاجية وزيادة الدخل وتعزيز الاستدامة
+                {t("In the era of digital transformation, agricultural e-platforms have become indispensable tools for developing the agricultural sector and achieving food security. These platforms connect farmers, traders, and consumers, providing a variety of services that contribute to improving productivity, increasing income, and enhancing sustainability.")}
               </p>
 
               <p>
-                حيث تمثل المنصات الإلكترونية الزراعية فرصة ذهبية لتحقيق نقلة نوعية في القطاع الزراعي لاستخدام أحدث الأساليب والتقنيات الزراعية المتاحة لتطوير القطاع الزراعي باستخدام اليات تدعم الحفاظ على البيئة وسلامة الغذاء وتعظم العائد من هذا القطاع. والذي يتطلب الترابط والتعاون بين الحكومة والمؤسسات والشركات لدعم هذه المنصات وتوفير البيئة المناسبة لتطويرها واستخدامها، من أجل تحقيق التنمية المستدامة والازدهار في القطاع الزراعي.
+                {t("Agricultural e-platforms represent a golden opportunity to achieve a qualitative shift in the agricultural sector, utilizing the latest available agricultural methods and technologies. This development utilizes mechanisms that support environmental conservation, food safety, and maximize returns from this sector. This requires interconnectedness and cooperation between the government, institutions, and companies to support these platforms and provide an appropriate environment for their development and use, in order to achieve sustainable development and prosperity in the agricultural sector.")}
               </p>
             </div>
           </div>
@@ -163,27 +137,7 @@ const Home = () => {
 
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-8 sm:mb-10 md:mb-12">
-            {/* Section Title */}
-            <div className="flex items-center justify-center">
-              {/* Left decorative lines - Hidden on very small screens */}
-              <div className="hidden xs:flex space-x-1 mr-2 sm:mr-4">
-                <div className="w-0.5 sm:w-1 h-8 sm:h-10 md:h-12 bg-green-500"></div>
-                <div className="w-0.5 sm:w-1 h-8 sm:h-10 md:h-12 bg-green-500"></div>
-                <div className="w-0.5 sm:w-1 h-8 sm:h-10 md:h-12 bg-green-500"></div>
-              </div>
-
-              {/* Title */}
-              <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white bg-green-500 px-3 sm:px-6 md:px-8 py-2 sm:py-3 rounded text-center" dir="rtl">
-                أهمية منصة نادي الاقتصاد الأخضر
-              </h2>
-
-              {/* Right decorative lines - Hidden on very small screens */}
-              <div className="hidden xs:flex space-x-1 ml-2 sm:ml-4">
-                <div className="w-0.5 sm:w-1 h-8 sm:h-10 md:h-12 bg-green-500"></div>
-                <div className="w-0.5 sm:w-1 h-8 sm:h-10 md:h-12 bg-green-500"></div>
-                <div className="w-0.5 sm:w-1 h-8 sm:h-10 md:h-12 bg-green-500"></div>
-              </div>
-            </div>
+            <SectionHeader title={t("The importance of the Green Economy Club platform")} />
           </div>
 
           {/* Features Grid */}
@@ -199,7 +153,7 @@ const Home = () => {
                     </svg>
                   </div>
                   <h3 className="text-white font-bold text-sm sm:text-base md:text-lg leading-tight" dir="rtl">
-                    تحسين الكفاءة والإنتاجية
+                    {t("Improve efficiency and productivity")}
                   </h3>
                 </div>
                 <div className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-4 h-4 sm:w-6 sm:h-6 bg-green-300 rounded-full opacity-70"></div>
@@ -218,7 +172,7 @@ const Home = () => {
                     </svg>
                   </div>
                   <h3 className="text-white font-bold text-sm sm:text-base md:text-lg leading-tight" dir="rtl">
-                    الإرشاد الزراعي
+                    {t("Agricultural Guidance")}
                   </h3>
                 </div>
                 <div className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-4 h-4 sm:w-6 sm:h-6 bg-green-300 rounded-full opacity-70"></div>
@@ -237,7 +191,7 @@ const Home = () => {
                     </svg>
                   </div>
                   <h3 className="text-white font-bold text-sm sm:text-base md:text-lg leading-tight" dir="rtl">
-                    تبادل المعلومات
+                    {t("Exchange of information")}
                   </h3>
                 </div>
                 <div className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-4 h-4 sm:w-6 sm:h-6 bg-green-300 rounded-full opacity-70"></div>
@@ -256,7 +210,7 @@ const Home = () => {
                     </svg>
                   </div>
                   <h3 className="text-white font-bold text-sm sm:text-base md:text-lg leading-tight" dir="rtl">
-                    تسهيل الوصول إلى الأسواق
+                    {t("Facilitating access to markets")}
                   </h3>
                 </div>
                 <div className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-4 h-4 sm:w-6 sm:h-6 bg-green-300 rounded-full opacity-70"></div>
@@ -275,7 +229,7 @@ const Home = () => {
                     </svg>
                   </div>
                   <h3 className="text-white font-bold text-sm sm:text-base md:text-lg leading-tight" dir="rtl">
-                    تعزيز الشمول المالي
+                   {t("Promoting financial inclusion")}
                   </h3>
                 </div>
                 <div className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-4 h-4 sm:w-6 sm:h-6 bg-green-300 rounded-full opacity-70"></div>
@@ -294,7 +248,7 @@ const Home = () => {
                     </svg>
                   </div>
                   <h3 className="text-white font-bold text-sm sm:text-base md:text-lg leading-tight" dir="rtl">
-                    دعم التنمية المستدامة
+                    {t("Supporting sustainable development")}
                   </h3>
                 </div>
                 <div className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-4 h-4 sm:w-6 sm:h-6 bg-green-300 rounded-full opacity-70"></div>
@@ -321,18 +275,18 @@ const Home = () => {
         {/* Content */}
         <div className="relative z-10 max-w-6xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
           {/* Section Title */}
-          <div className="text-center mb-12 sm:mb-14 md:mb-16">
+          {/* <div className="text-center mb-12 sm:mb-14 md:mb-16">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 sm:mb-10 md:mb-12 tracking-wide" dir="rtl">
               أهدافنا
             </h2>
-          </div>
+          </div> */}
+          <SectionHeader title={t("Our Goals")} />
 
           {/* Goals Content */}
           <div className="flex justify-center">
             <div className="bg-black bg-opacity-50 rounded-xl sm:rounded-2xl p-6 sm:p-8 md:p-10 lg:p-16 backdrop-blur-md max-w-5xl border border-white border-opacity-10 w-full">
               <p className="text-white text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed text-center font-medium" dir="rtl">
-                المساهمة في تحقيق التكامل بين الاقتصاد الأخضر والتنمية المستدامة والتمكين الاجتماعي من خلال إحداث تغيير إيجابي بالمجتمعات
-                العربية بين مختلف أطراف القطاع الزراعي
+                {t("Contributing to achieving integration between the green economy, sustainable development, and social empowerment by bringing about positive change in Arab societies among various stakeholders in the agricultural sector.")}
               </p>
 
               {/* Decorative elements */}

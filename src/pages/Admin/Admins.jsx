@@ -14,25 +14,7 @@ const Admins = () => {
     phone: ''
   });
 
-  // const admins = [
-  //   {
-  //     id: 1,
-  //     name: 'أحمد محمد',
-  //     email: 'ahmed@example.com',
-  //     phone: '01234567890',
-  //     role: 'مدير',
-
-  //   },
-  //   {
-  //     id: 2,
-  //     name: 'سارة أحمد',
-  //     email: 'sara@example.com',
-  //     phone: '01234567891',
-  //     role: 'مشرف',
-
-  //   },
-
-  // ];
+  
   const [admins,setAdmins]=useState([])
       const fetchData=async()=>{
      const result= await adminAPI.getAllAdmins();
@@ -104,10 +86,17 @@ const Admins = () => {
     // هنا يمكن إضافة الكود الخاص بإرسال البيانات إلى الخادم
     if (isEditMode) {
       console.log('تم تعديل بيانات المسؤول:', newAdmin);
+      const result=await adminAPI.updateAdmin(currentAdmin.id,newAdmin);
+        if (result.data.status) {
+        fetchData();
+        handleCloseModal();
+      }
+
     } else {
       console.log(newAdmin);
       const result=await adminAPI.addAdmin(newAdmin);
       if (result.data.status) {
+        fetchData();
         handleCloseModal();
       }
     }
@@ -145,7 +134,7 @@ const Admins = () => {
             <tbody className="bg-white divide-y divide-gray-200">
               {admins.map((admin) => (
                 <tr key={admin.id} className="hover:bg-gray-50 transition-colors duration-200">
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-4 text-center">
                     <div className="flex flex-col sm:flex-row sm:items-center">
                       <div className="flex-shrink-0 h-10 w-10 bg-green-100 rounded-full flex items-center justify-center">
                         <span className="text-green-600 font-medium text-sm">

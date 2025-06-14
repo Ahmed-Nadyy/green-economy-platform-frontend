@@ -1,22 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ServiceCard from './ui/ServiceCard';
 import SectionHeader from './ui/SectionHeader';
+import blogAPI from '../../services/blogAPI';
 
 const ClimateSection = () => {
-    const climateItems = [
-        {
-            title: 'مناخ مصر والمحاصيل الزراعية',
-            imageSrc: 'https://images.pexels.com/photos/2252584/pexels-photo-2252584.jpeg?auto=compress&cs=tinysrgb&w=600',
-            bgColor: 'bg-green-400',
-            variant: 'curved',
-        },
-        {
-            title: 'التغيرات المناخية وتأثيرها',
-            secondaryText: 'على قطاع الزراعة في مصر',
-            imageSrc: 'https://images.pexels.com/photos/1118873/pexels-photo-1118873.jpeg?auto=compress&cs=tinysrgb&w=600',
-            bgColor: 'bg-green-500',
-        }
-    ];
+    const [climateItems, setclimateItems] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchclimateItems = async () => {
+            try {
+                const response = await blogAPI.getArticlesBySubType("climate"); // Fetch guidance data
+                setclimateItems(response.data); // Assuming response contains an array of items
+                setLoading(false);
+            } catch (err) {
+                setError('فشل تحميل التوجيهات');
+                setLoading(false);
+            }
+        };
+
+        fetchclimateItems();
+    }, []);
+
+    if (loading) {
+        return <div>جاري تحميل المقالات...</div>;
+    }
+
+    if (error) {
+        return <div>{error}</div>;
+    }
 
     return (
         <section className="py-16 bg-white" id="climate">
@@ -27,8 +40,8 @@ const ClimateSection = () => {
                         <ServiceCard
                             key={index}
                             cardIndex={index}
-                            title={item.title}
-                            imageSrc={item.imageSrc}
+                            title={item.arabicTitle}
+                            imageSrc={`${import.meta.env.VITE_API_URL_FRONT}${item.imageUrl}`}
                             variant={item.variant}
                             secondaryText={item.secondaryText}
                             linkText="اقرأ المزيد"

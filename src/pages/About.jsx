@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import bg1 from "../assets/about/bg1.png";
+import SectionHeader from "./Services/ui/SectionHeader";
 
 const features = [
   {
@@ -118,29 +119,7 @@ const About = () => {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-12">
-            {/* Section Title */}
-            <div className="inline-flex items-center">
-              {/* Left decorative lines */}
-              <div className="flex space-x-1 mr-4">
-                <div className="w-1 h-12 bg-green-500"></div>
-                <div className="w-1 h-12 bg-green-500"></div>
-                <div className="w-1 h-12 bg-green-500"></div>
-              </div>
-
-              {/* Title */}
-              <h2 className="text-3xl font-bold text-white bg-green-500 px-8 py-3 rounded" dir="rtl">
-                أهداف النادي الإلكتروني الزراعي
-              </h2>
-
-              {/* Right decorative lines */}
-              <div className="flex space-x-1 ml-4">
-                <div className="w-1 h-12 bg-green-500"></div>
-                <div className="w-1 h-12 bg-green-500"></div>
-                <div className="w-1 h-12 bg-green-500"></div>
-              </div>
-            </div>
-          </div>
+          <SectionHeader title="أهداف النادي الإلكتروني الزراعي" />
 
           {/* Goals Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -210,29 +189,7 @@ const About = () => {
       {/* فوائد المنصة الزراعية Section */}
       <section className="py-16 bg-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-12">
-            {/* Section Title */}
-            <div className="inline-flex items-center">
-              {/* Left decorative lines */}
-              <div className="flex space-x-1 mr-4">
-                <div className="w-1 h-12 bg-green-500"></div>
-                <div className="w-1 h-12 bg-green-500"></div>
-                <div className="w-1 h-12 bg-green-500"></div>
-              </div>
-
-              {/* Title */}
-              <h2 className="text-3xl font-bold text-white bg-green-500 px-8 py-3 rounded" dir="rtl">
-                فوائد النادي الإلكتروني الزراعي
-              </h2>
-
-              {/* Right decorative lines */}
-              <div className="flex space-x-1 ml-4">
-                <div className="w-1 h-12 bg-green-500"></div>
-                <div className="w-1 h-12 bg-green-500"></div>
-                <div className="w-1 h-12 bg-green-500"></div>
-              </div>
-            </div>
-          </div>
+          <SectionHeader title="فوائد النادي الإلكتروني الزراعي" />
 
           {/* Benefits Cards */}
           <div className="space-y-8 text-right">

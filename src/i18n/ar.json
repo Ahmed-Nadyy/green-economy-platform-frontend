@@ -1,7 +1,56 @@
 {
   "translation": {
-    "app": {
-      "name": "منصة الاقتصاد الأخضر"
-    }
+    "name": "نادي الاقتصاد الأخضر",
+    "address": "العنوان - قنا - الشئون - شارع ليبيا",
+    "Home": "الرئيسية",
+    "About Us": "من نحن",
+    "Our services": "خدماتنا",
+    "Exhibition": "المعرض",
+    "Job": "فرص عمل",
+    "Contact US": "تواصل معنا",
+    "Our Partners":"شركاؤنا",
+    "Foundation's word":"كلمة المؤسسة",
+    "Improve efficiency and productivity": "تحسين الكفاءة والإنتاجية",
+    "Agricultural Guidance":"الإرشاد الزراعي",
+    "Exchange of information":"تبادل المعلومات",
+    "Facilitating access to markets":"تسهيل الوصول إلى الأسواق",
+    "Promoting financial inclusion":"تعزيز الشمول المالي",
+    "Supporting sustainable development":"دعم التنمية المستدامة",
+    "Our Goals":"أهدافنا",
+    "Main Links":"الروابط الرئيسية",
+    "Agricultural Crops":"المحاصيل الزراعية",
+    "Climate change and its impact":"التغيرات المناخية وتأثيرها",
+    "Agricultural awareness and guidance":"التوعية والإرشاد الزراعي",
+    "Contributing to achieving integration between the green economy, sustainable development, and social empowerment by bringing about positive change in Arab societies among various stakeholders in the agricultural sector.":"المساهمة في تحقيق التكامل بين الاقتصاد الأخضر والتنمية المستدامة والتمكين الاجتماعي من خلال إحداث تغيير إيجابي بالمجتمعات العربية بين مختلف أطراف القطاع الزراعي",
+    "The importance of the Green Economy Club platform":"أهمية منصة نادي الاقتصاد الأخضر",
+    "Agricultural e-platforms represent a golden opportunity to achieve a qualitative shift in the agricultural sector, utilizing the latest available agricultural methods and technologies. This development utilizes mechanisms that support environmental conservation, food safety, and maximize returns from this sector. This requires interconnectedness and cooperation between the government, institutions, and companies to support these platforms and provide an appropriate environment for their development and use, in order to achieve sustainable development and prosperity in the agricultural sector.":"حيث تمثل المنصات الإلكترونية الزراعية فرصة ذهبية لتحقيق نقلة نوعية في القطاع الزراعي لاستخدام أحدث الأساليب والتقنيات الزراعية المتاحة لتطوير القطاع الزراعي باستخدام اليات تدعم الحفاظ على البيئة وسلامة الغذاء وتعظم العائد من هذا القطاع. والذي يتطلب الترابط والتعاون بين الحكومة والمؤسسات والشركات لدعم هذه المنصات وتوفير البيئة المناسبة لتطويرها واستخدامها، من أجل تحقيق التنمية المستدامة والازدهار في القطاع الزراعي.",
+    "In the era of digital transformation, agricultural e-platforms have become indispensable tools for developing the agricultural sector and achieving food security. These platforms connect farmers, traders, and consumers, providing a variety of services that contribute to improving productivity, increasing income, and enhancing sustainability.":"في عصر التحول الرقمي، أصبحت المنصات الإلكترونية الزراعية أدوات لا غنى عنها لتطوير القطاع الزراعي وتحقيق الأمن الغذائي. حيث تعمل هذه المنصات على ربط المزارعين والتجار والمستهلكين، وتوفير مجموعة متنوعة من الخدمات التي تساهم في تحسين الإنتاجية وزيادة الدخل وتعزيز الاستدامة",
+    "The Green Economy Club platform is a hub for creative innovation in the agricultural sector. It is an electronic platform that connects various stakeholders in the agricultural sector, such as farmers, traders, suppliers, and consumers, and provides a variety of services, such as information exchange, e-commerce, financing, and agricultural guidance.": "منصة نادي الاقتصاد الأخضر مركزا للابتكار الإبداعي في مجال قطاع الزراعة وهي منصة الكترونية تربط بين مختلف أطراف القطاع الزراعي، مثل المزارعين، والتجار، والموردين، والمستهلكين وتوفر مجموعة متنوعة من الخدمات، مثل تبادل المعلومات، والتجارة الإلكترونية، والتمويل، والإرشاد الزراعي",
+
+
+
+
+
+
+
+
+
+
+
+    "Videos on crop cultivation and field schools":"فيديوهات عن زراعة المحاصيل والمدارس الحقلية",
+    "Video from the exhibition":"فيديو من المعرض",
+    "Welcome to the Green Economy Club Exhibition":"مرحبًا بك في معرض نادي الاقتصاد الأخضر",
+    "The Green Economy Club is a project of the Egyptian Family Development Foundation, which works to spread awareness about the agricultural sector and is a center for creative innovation in the field of agriculture. Through the activities of this project, the Foundation launched its electronic platform (the Green Economy Club Platform)":"نادي الاقتصاد الاخضر هو إحدى مشروعات مؤسسة تنمية الاسرة المصرية التي تعمل علي نشر الوعي بالقطاع الزراعي وتعد مركزا للابتكار الإبداعي في مجال قطاع الزراعة ومن خلال أنشطة هذا المشروع أطلقت المؤسسة منصتها الالكترونية ( منصة نادي الاقتصاد الأخضر ).",
+    "Photos of crop cultivation and field schools":"صور عن زراعة المحاصيل والمدارس الحقلية",
+    "Green Economy Club is now offering job opportunities.":"نادي الاقتصاد الأخضر يقدم فرص عمل الان",
+    "Apply now":"تقدم بطلب الآن",
+    "Full name":"الاسم بالكامل",
+    "Mobile":"المحمول",
+    "The Position applied for":"الوظيفة المتقدم لها",
+    "Number of years of experience":"عدد سنوات الخبره",
+    "Qualifications":"المؤهلات",
+    "Email":"البريد الإلكتروني",
+    "Send":"إرسال",
+    "Contact us anytime, we are always here to help you.":"تواصل معنا في اي وقت ,نحن دائما هنا لمساعدتك"
   }
 }

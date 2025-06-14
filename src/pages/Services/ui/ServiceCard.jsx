@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigation } from 'react-router-dom';
 
 const ServiceCard = ({
     title,
@@ -9,7 +10,7 @@ const ServiceCard = ({
     cardIndex
 }) => {
     const isEven = cardIndex % 2 !== 0;
-
+const navigation = useNavigation();
     const getCardStyle = () => {
         if (variant === 'curved') {
             return 'rounded-tl-3xl rounded-br-3xl';
@@ -43,7 +44,7 @@ const ServiceCard = ({
                     {secondaryText}
                 </p>
             )}
-            <button className={`${isEven ? 'bg-green-600 text-white' : 'bg-white'} mt-auto text-green-600 px-8 py-2 rounded-full font-medium hover:bg-green-50 transition-colors`}>
+            <button className={`${isEven ? 'bg-green-600 text-white' : 'bg-white'} mt-auto text-green-600 px-8 py-2 rounded-full font-medium hover:bg-green-50 transition-colors`} onClick={()=>navigation("")}>
                 {linkText}
             </button>
         </div>

@@ -10,6 +10,8 @@ const Jobs = () => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await jobRequestAPI.getAllJobRequests();
+      console.log(result.data);
+      
       setJobApplications(result.data)
     }
     fetchData();
@@ -101,15 +103,15 @@ const Jobs = () => {
                       </div>
                       <div className="flex items-center text-sm text-gray-600">
                         <FaPhone className="ml-2 h-4 w-4 text-gray-400" />
-                        <span dir="ltr">{application.phone}</span>
+                        <span dir="ltr">{application.phoneNumber}</span>
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{application.position}</div>
+                    <div className="text-sm text-gray-900">{application.role}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap hidden lg:table-cell">
-                    <div className="text-sm text-gray-500">{application.date}</div>
+                    <div className="text-sm text-gray-500">{application.updatedAt}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap hidden lg:table-cell">
                     <div className="text-sm text-gray-500">{application.qualification}</div>
@@ -155,7 +157,7 @@ const Jobs = () => {
                 </div>
                 <div className="flex items-center text-sm text-gray-600">
                   <FaPhone className="ml-2 h-4 w-4 text-gray-400" />
-                  <span dir="ltr">{application.phone}</span>
+                  <span dir="ltr">{application.phoneNumber}</span>
                 </div>
                 <div className="text-sm text-gray-500">
                   تاريخ التقديم: {application.date}
@@ -228,7 +230,7 @@ const Jobs = () => {
                           </p>
                           <p className="text-base text-gray-900 flex items-center">
                             <FaPhone className="ml-2 h-4 w-4 text-gray-400" />
-                            <span dir="ltr">{selectedApplication.phone}</span>
+                            <span dir="ltr">{selectedApplication.phoneNumber}</span>
                           </p>
                         </div>
                       </div>

@@ -2,16 +2,18 @@ import React, { useState } from "react";
 import bg1 from "../assets/jobs/bg1.png";
 import jobRequestAPI from "../services/jobRequestAPI";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const JobsPage = () => {
   const [formData, setFormData] = useState({
     fullName: '',
     phoneNumber: '',
-    preferredJobTitle: '',
-    yearsOfExperience: '',
+    role: '',
+    qualification: '',
     email: '',
-    contactNumber: ''
+    experience: ''
   });
+    const { t } = useTranslation();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -31,10 +33,10 @@ const JobsPage = () => {
       setFormData({
         fullName: '',
         phoneNumber: '',
-        preferredJobTitle: '',
-        yearsOfExperience: '',
+        role: '',
+        qualification: '',
         email: '',
-        contactNumber: ''
+        experience: ''
       });
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -60,8 +62,8 @@ const JobsPage = () => {
           <div className="max-w-4xl mx-auto text-center">
             {/* Main Content */}
             <div className="bg-black bg-opacity-30 rounded-lg p-8 sm:p-12 backdrop-blur-sm">
-              <h1 className="text-white text-xl sm:text-2xl lg:text-2xl leading-relaxed mb-6 font-thin" dir="rtl">
-                نادي الاقتصاد الأخضر يقدم فرص عمل الان
+              <h1 className="text-white text-xl sm:text-2xl lg:text-2xl leading-relaxed mb-6 font-thin">
+                {t("Green Economy Club is now offering job opportunities.")}
               </h1>
             </div>
           </div>
@@ -89,7 +91,7 @@ const JobsPage = () => {
           {/* Section Title */}
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-8" dir="rtl">
-              تقدم بطلب الآن
+              {t("Apply now")}
             </h2>
           </div>
 
@@ -104,7 +106,7 @@ const JobsPage = () => {
                     name="fullName"
                     value={formData.fullName}
                     onChange={handleInputChange}
-                    placeholder="الاسم بالكامل"
+                    placeholder={t("Full name")}
                     className="w-full px-6 py-4 rounded-xl border-0 bg-white text-gray-800 placeholder-gray-500 text-lg focus:outline-none focus:ring-4 focus:ring-green-300 transition-all duration-300"
                     dir="rtl"
                   />
@@ -115,7 +117,7 @@ const JobsPage = () => {
                     name="phoneNumber"
                     value={formData.phoneNumber}
                     onChange={handleInputChange}
-                    placeholder="المحمول"
+                    placeholder={t("Mobile")}
                     className="w-full px-6 py-4 rounded-xl border-0 bg-white text-gray-800 placeholder-gray-500 text-lg focus:outline-none focus:ring-4 focus:ring-green-300 transition-all duration-300"
                     dir="rtl"
                   />
@@ -126,22 +128,34 @@ const JobsPage = () => {
               <div>
                 <input
                   type="text"
-                  name="preferredJobTitle"
-                  value={formData.preferredJobTitle}
+                  name="role"
+                  value={formData.role}
                   onChange={handleInputChange}
-                  placeholder="الوظيفة المتقدم لها"
+                  placeholder={t("The Position applied for")}
                   className="w-full px-6 py-4 rounded-xl border-0 bg-white text-gray-800 placeholder-gray-500 text-lg focus:outline-none focus:ring-4 focus:ring-green-300 transition-all duration-300"
                   dir="rtl"
                 />
               </div>
 
+              {/* Fifth Row - Contact Number */}
+              <div>
+                <input
+                  type="tel"
+                  name="experience"
+                  value={formData.experience}
+                  onChange={handleInputChange}
+                  placeholder={t("Number of years of experience")}
+                  className="w-full px-6 py-4 rounded-xl border-0 bg-white text-gray-800 placeholder-gray-500 text-lg focus:outline-none focus:ring-4 focus:ring-green-300 transition-all duration-300"
+                  dir="rtl"
+                />
+              </div>
               {/* Third Row - Years of Experience */}
               <div>
                 <textarea
-                  name="yearsOfExperience"
-                  value={formData.yearsOfExperience}
+                  name="qualification"
+                  value={formData.qualification}
                   onChange={handleInputChange}
-                  placeholder="سنوات الخبرات"
+                  placeholder={t("Qualifications")}
                   rows="4"
                   className="w-full px-6 py-4 rounded-xl border-0 bg-white text-gray-800 placeholder-gray-500 text-lg focus:outline-none focus:ring-4 focus:ring-green-300 transition-all duration-300 resize-none"
                   dir="rtl"
@@ -155,24 +169,12 @@ const JobsPage = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  placeholder="البريد الإلكتروني"
+                  placeholder={t("Email")}
                   className="w-full px-6 py-4 rounded-xl border-0 bg-white text-gray-800 placeholder-gray-500 text-lg focus:outline-none focus:ring-4 focus:ring-green-300 transition-all duration-300"
                   dir="rtl"
                 />
               </div>
 
-              {/* Fifth Row - Contact Number */}
-              <div>
-                <input
-                  type="tel"
-                  name="contactNumber"
-                  value={formData.contactNumber}
-                  onChange={handleInputChange}
-                  placeholder="رقم التواصل"
-                  className="w-full px-6 py-4 rounded-xl border-0 bg-white text-gray-800 placeholder-gray-500 text-lg focus:outline-none focus:ring-4 focus:ring-green-300 transition-all duration-300"
-                  dir="rtl"
-                />
-              </div>
 
               {/* Submit Button */}
               <div className="pt-4">
@@ -180,7 +182,7 @@ const JobsPage = () => {
                   onClick={handleSubmit}
                   className="w-full bg-black text-white font-bold text-xl py-4 px-8 rounded-xl hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 transition-all duration-300 transform hover:scale-105"
                 >
-                  إرسال
+                  {t("Send")}
                 </button>
               </div>
             </div>

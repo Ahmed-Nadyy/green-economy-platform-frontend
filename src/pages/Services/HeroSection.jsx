@@ -1,7 +1,10 @@
 import React from 'react';
 import bg1 from "../../assets/services/bg1.png";
+import { useTranslation } from 'react-i18next';
 
 const HeroSection = () => {
+    const { t } = useTranslation();
+    
     return (
         <div className="relative overflow-hidden bg-green-900 text-white">
             <div className="relative min-h-screen w-full">
@@ -21,8 +24,8 @@ const HeroSection = () => {
                     <div className="max-w-4xl mx-auto text-center">
                         {/* Main Content */}
                         <div className="bg-black bg-opacity-30 rounded-lg p-8 sm:p-12 backdrop-blur-sm">
-                            <h1 className="text-white text-xl sm:text-2xl lg:text-2xl leading-relaxed mb-6 font-thin" dir="rtl">
-                                نادي الاقتصاد الاخضر هو إحدى مشروعات مؤسسة تنمية الاسرة المصرية التي تعمل علي نشر الوعي بالقطاع الزراعي وتعد مركزا للابتكار الإبداعي في مجال قطاع الزراعة ومن خلال أنشطة هذا المشروع أطلقت المؤسسة منصتها الالكترونية ( منصة نادي الاقتصاد الأخضر ).
+                            <h1 className="text-white text-xl sm:text-2xl lg:text-2xl leading-relaxed mb-6 font-thin">
+                            {t("The Green Economy Club is a project of the Egyptian Family Development Foundation, which works to spread awareness about the agricultural sector and is a center for creative innovation in the field of agriculture. Through the activities of this project, the Foundation launched its electronic platform (the Green Economy Club Platform)")}
                             </h1>
                         </div>
                     </div>

@@ -68,7 +68,6 @@ const AdminServices = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-
     try {
       if (modalType === 'crop') {
         if (isEditMode) {
@@ -82,7 +81,7 @@ const AdminServices = () => {
         }
       } else if (modalType === 'article' || modalType === 'climate') {
         // Set article subtype
-        formData.append('subType', modalType === 'article' ? 'awareness' : 'climate');
+        formData.append('type', modalType === 'article' ? 'awareness' : 'climate');
 
         if (isEditMode) {
           await blogAPI.updateArticle(currentItem.id, formData);
@@ -96,6 +95,7 @@ const AdminServices = () => {
           } else {
             setClimateChangeArticles(updateArticles);
           }
+          fetchData();
         } else {
           const response = await blogAPI.createArticle(formData);
           if (modalType === 'article') {
@@ -103,6 +103,7 @@ const AdminServices = () => {
           } else {
             setClimateChangeArticles([...climateChangeArticles, response.data]);
           }
+          fetchData();
         }
       }
       closeModal();
@@ -136,10 +137,10 @@ const AdminServices = () => {
   const ItemCard = ({ item, type }) => (
     <div className="relative overflow-hidden rounded-lg shadow-md group p-1 bg-[#e8e8e8]">
       <div className='bg-[#2ECC71] p-2 m-2 sm:m-4 rounded-2xl'>
-        <img src={`${import.meta.env.VITE_API_URL_FRONT}${item.imageUrl}`} alt={item.title} className="w-full h-16 sm:h-24 object-contain" />
+        <img src={`${import.meta.env.VITE_API_URL_FRONT}${item.imageUrl}`} alt={item.arabicTitle} className="w-full h-16 sm:h-24 object-contain" />
       </div>
       <div className="p-2">
-        <h3 className="text-sm sm:text-md text-gray-800 font-bold text-center">{item.title}</h3>
+        <h3 className="text-sm sm:text-md text-gray-800 font-bold text-center">{item.arabicTitle}</h3>
       </div>
       <div className="absolute top-1 right-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
         <div className="flex items-center gap-1 space-x-reverse bg-white p-1 rounded-lg shadow-md">
@@ -165,7 +166,8 @@ const AdminServices = () => {
       </div>
     </div>
   );
-
+  console.log(currentItem);
+  
   return (
     <div className="rounded-lg shadow-md px-2 sm:px-4 py-4">
       {isLoading && (
@@ -294,7 +296,7 @@ const AdminServices = () => {
                     {currentItem && currentItem.imageUrl ? (
                       <div className="mb-3">
                         <img
-                          src={isEditMode?`${import.meta.env.VITE_API_URL_FRONT}${currentItem.imageUrl}`:`${currentItem.imageUrl}`}
+                          src={currentItem?.imageUrl?.startsWith('http') ? currentItem.imageUrl : `${import.meta.env.VITE_API_URL_FRONT}${currentItem?.imageUrl}`}
                           alt="Current image"
                           className="mx-auto h-24 sm:h-32 w-auto rounded-md shadow-md"
                         />

@@ -36,7 +36,7 @@ const DashboardLayout = () => {
   ];
 
   return (
-    <div className="flex h-screen bg-gray-100 overflow-hidden">
+    <div className="flex h-screen bg-gray-100 overflow-hidden " dir='rtl'>
       {/* Sidebar for desktop */}
       <div className="hidden md:flex md:flex-col w-64 min-w-[200px] bg-white shadow-lg transition-all duration-300">
         <div className="p-4 text-center border-b border-gray-200">

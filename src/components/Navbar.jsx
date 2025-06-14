@@ -3,10 +3,13 @@ import { Link } from "react-router-dom";
 import { FaYoutube, FaTiktok, FaFacebook, FaWhatsapp, FaPhone, FaMapMarkerAlt, FaBars, FaTimes } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import LanguageSwitcher from "./LanguageSwitcher";
+import { useTranslation } from 'react-i18next';
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
+  const { t } = useTranslation();
+  console.log(t);
+  
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
@@ -24,7 +27,9 @@ const Navbar = () => {
             </div>
             <div className="flex items-center text-green-600">
               <FaMapMarkerAlt className="ml-1" size={18} />
-              <span className="text-xs sm:text-sm font-medium">العنوان - قنا - الشئون - شارع ليبيا</span>
+              <span className="text-xs sm:text-sm font-medium">
+                {t('address')}
+                </span>
             </div>
           </div>
 
@@ -59,21 +64,21 @@ const Navbar = () => {
           </button>
 
           {/* Navigation links - right side in RTL - hidden on mobile */}
-          <div className="hidden md:flex items-center space-x-reverse space-x-6 text-right">
-            <Link to="/" className="text-white font-medium hover:text-green-200">الرئيسية</Link>
-            <Link to="/about" className="text-white font-medium hover:text-green-200">من نحن</Link>
-            <Link to="/services" className="text-white font-medium hover:text-green-200">خدماتنا</Link>
-            <Link to="/gallery" className="text-white font-medium hover:text-green-200">المعرض</Link>
-            <Link to="/jobs" className="text-white font-medium hover:text-green-200">فرص عمل</Link>
-            <Link to="/contact" className="text-white font-medium hover:text-green-200">تواصل معنا</Link>
+          <div className="hidden md:flex items-center ">
+            <Link to="/" className="text-white font-medium hover:text-green-200 mx-2">{t("Home")}</Link>
+            <Link to="/about" className="text-white font-medium hover:text-green-200 mx-2">{t("About Us")}</Link>
+            <Link to="/services" className="text-white font-medium hover:text-green-200 mx-2">{t("Our services")}</Link>
+            <Link to="/gallery" className="text-white font-medium hover:text-green-200 mx-2">{t("Exhibition")}</Link>
+            <Link to="/jobs" className="text-white font-medium hover:text-green-200 mx-2">{t("Job")}</Link>
+            <Link to="/contact" className="text-white font-medium hover:text-green-200 mx-2">{t("Contact US")}</Link>
           </div>
 
           {/* Contact buttons - left side in RTL */}
-          <div className="flex items-center space-x-reverse space-x-3">
-            <Link to="/contact" className="bg-white rounded-full p-2 text-[#2ECC71] hover:bg-gray-100">
+          <div className="flex items-center ">
+            <Link to="/contact" className="bg-white rounded-full p-2 text-[#2ECC71] hover:bg-gray-100 mx-2">
               <FaPhone size={18} />
             </Link>
-            <Link to="/contact" className="bg-white rounded-full p-2 text-[#2ECC71] hover:bg-gray-100">
+            <Link to="/contact" className="bg-white rounded-full p-2 text-[#2ECC71] hover:bg-gray-100 mx-2">
               <FaWhatsapp size={18} />
             </Link>
           </div>

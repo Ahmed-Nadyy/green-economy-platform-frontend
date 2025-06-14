@@ -1,7 +1,9 @@
-import React, { useState } from "react";
 import bg1 from "../assets/contact/bg1.png";
+import { useTranslation } from "react-i18next";
 
 const Contact = () => {
+    const { t } = useTranslation();
+  
   const handleSocialClick = (platform) => {
     console.log(`Clicked on ${platform}`);
     switch (platform) {
@@ -41,9 +43,8 @@ const Contact = () => {
           <div className="max-w-4xl mx-auto text-center">
             {/* Main Content */}
             <div className="bg-black bg-opacity-30 rounded-lg p-8 sm:p-12 backdrop-blur-sm">
-              <h1 className="text-white text-xl sm:text-2xl lg:text-2xl leading-relaxed mb-6 font-thin" dir="rtl">
-                تواصل معنا في اي وقت ,نحن دائما هنا لمساعدتك
-
+              <h1 className="text-white text-xl sm:text-2xl lg:text-2xl leading-relaxed mb-6 font-thin" >
+               {t("Contact us anytime, we are always here to help you.")}
               </h1>
             </div>
           </div>
@@ -70,11 +71,11 @@ const Contact = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
           {/* Social Media Icons */}
-          <div className="flex justify-center items-center space-x-8 space-x-reverse">
+          <div className="flex justify-center items-center ">
             {/* YouTube */}
             <button
               onClick={() => handleSocialClick('youtube')}
-              className="group relative w-16 h-16 bg-green-500 rounded-full flex items-center justify-center hover:bg-green-600 transform hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl"
+              className="group relative w-16 h-16 bg-green-500 rounded-full flex items-center justify-center hover:bg-green-600 transform hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl mx-4"
             >
               <svg
                 className="w-8 h-8 text-white"
@@ -89,7 +90,7 @@ const Contact = () => {
             {/* TikTok */}
             <button
               onClick={() => handleSocialClick('tiktok')}
-              className="group relative w-16 h-16 bg-green-500 rounded-full flex items-center justify-center hover:bg-green-600 transform hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl"
+              className="group relative w-16 h-16 bg-green-500 rounded-full flex items-center justify-center hover:bg-green-600 transform hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl mx-4"
             >
               <svg
                 className="w-8 h-8 text-white"
@@ -104,7 +105,7 @@ const Contact = () => {
             {/* Facebook */}
             <button
               onClick={() => handleSocialClick('facebook')}
-              className="group relative w-16 h-16 bg-green-500 rounded-full flex items-center justify-center hover:bg-green-600 transform hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl"
+              className="group relative w-16 h-16 bg-green-500 rounded-full flex items-center justify-center hover:bg-green-600 transform hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl mx-4"
             >
               <svg
                 className="w-8 h-8 text-white"
@@ -119,7 +120,7 @@ const Contact = () => {
             {/* WhatsApp */}
             <button
               onClick={() => handleSocialClick('whatsapp')}
-              className="group relative w-16 h-16 bg-green-500 rounded-full flex items-center justify-center hover:bg-green-600 transform hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl"
+              className="group relative w-16 h-16 bg-green-500 rounded-full flex items-center justify-center hover:bg-green-600 transform hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl mx-4"
             >
               <svg
                 className="w-8 h-8 text-white"

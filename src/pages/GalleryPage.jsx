@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import bg1 from "../assets/gallery/bg1.png";
 import galleryAPI from "../services/galleryAPI";
+import SectionHeader from "./Services/ui/SectionHeader";
+import { useTranslation } from "react-i18next";
 
 const GalleryPage = () => {
   // State for images
@@ -65,6 +67,7 @@ const THUMBNAILS_PER_VIEW = isSmallScreen ? 3 : 6;
   useEffect(() => {
     fetchGallery();
   }, []);
+    const { t } = useTranslation();
 
   // Navigation handlers for images
   const handleImagePrevious = () => {
@@ -119,7 +122,7 @@ const THUMBNAILS_PER_VIEW = isSmallScreen ? 3 : 6;
             {/* Main Content */}
             <div className="bg-black bg-opacity-30 rounded-lg p-8 sm:p-12 backdrop-blur-sm">
               <h1 className="text-white text-xl sm:text-2xl lg:text-2xl leading-relaxed mb-6 font-thin" dir="rtl">
-                مرحبًا بك في معرض نادي الاقتصاد الأخضر
+               {t("Welcome to the Green Economy Club Exhibition")} 
               </h1>
             </div>
           </div>
@@ -142,30 +145,7 @@ const THUMBNAILS_PER_VIEW = isSmallScreen ? 3 : 6;
           <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-green-600 rounded-full blur-2xl"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          {/* Section Title */}
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center">
-              {/* Left decorative lines */}
-              <div className="flex space-x-1 mr-4">
-                <div className="w-1 h-12 bg-green-500"></div>
-                <div className="w-1 h-12 bg-green-500"></div>
-                <div className="w-1 h-12 bg-green-500"></div>
-              </div>
-
-              {/* Title */}
-              <h2 className="text-3xl font-bold text-white bg-green-500 px-8 py-3 rounded" dir="rtl">
-                صور عن زراعة المحاصيل والمدارس الحقلية
-              </h2>
-
-              {/* Right decorative lines */}
-              <div className="flex space-x-1 ml-4">
-                <div className="w-1 h-12 bg-green-500"></div>
-                <div className="w-1 h-12 bg-green-500"></div>
-                <div className="w-1 h-12 bg-green-500"></div>
-              </div>
-            </div>
-          </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">          <SectionHeader title={t("Photos of crop cultivation and field schools")} />
 
           {/* Images Loading State */}
           {imagesLoading && (
@@ -226,9 +206,9 @@ const THUMBNAILS_PER_VIEW = isSmallScreen ? 3 : 6;
                   {/* Image info overlay */}
                   {selectedImage && (
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
-                      <h3 className="text-white text-lg font-semibold" dir="rtl">
+                      {/* <h3 className="text-white text-lg font-semibold" dir="rtl">
                         {selectedImage.title || 'صورة من المعرض'}
-                      </h3>
+                      </h3> */}
                       {selectedImage.description && (
                         <p className="text-gray-200 text-sm mt-1" dir="rtl">
                           {selectedImage.description}
@@ -310,30 +290,7 @@ const THUMBNAILS_PER_VIEW = isSmallScreen ? 3 : 6;
           <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-green-600 rounded-full blur-2xl"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          {/* Section Title */}
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center">
-              {/* Left decorative lines */}
-              <div className="flex space-x-1 mr-4">
-                <div className="w-1 h-12 bg-green-500"></div>
-                <div className="w-1 h-12 bg-green-500"></div>
-                <div className="w-1 h-12 bg-green-500"></div>
-              </div>
-
-              {/* Title */}
-              <h2 className="text-3xl font-bold text-white bg-green-500 px-8 py-3 rounded" dir="rtl">
-                فيديوهات عن زراعة المحاصيل والمدارس الحقلية
-              </h2>
-
-              {/* Right decorative lines */}
-              <div className="flex space-x-1 ml-4">
-                <div className="w-1 h-12 bg-green-500"></div>
-                <div className="w-1 h-12 bg-green-500"></div>
-                <div className="w-1 h-12 bg-green-500"></div>
-              </div>
-            </div>
-          </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">          <SectionHeader title={t("Videos on crop cultivation and field schools")}/>
 
           {/* Videos Loading State */}
           {videosLoading && (
@@ -398,9 +355,9 @@ const THUMBNAILS_PER_VIEW = isSmallScreen ? 3 : 6;
                   {/* Video info overlay */}
                   {selectedVideo && (
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
-                      <h3 className="text-white text-lg font-semibold" dir="rtl">
+                      {/* <h3 className="text-white text-lg font-semibold" dir="rtl">
                         {selectedVideo.title || 'فيديو من المعرض'}
-                      </h3>
+                      </h3> */}
                       {selectedVideo.description && (
                         <p className="text-gray-200 text-sm mt-1" dir="rtl">
                           {selectedVideo.description}

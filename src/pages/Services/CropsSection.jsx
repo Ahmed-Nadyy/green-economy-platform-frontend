@@ -37,12 +37,12 @@ const CropsSection = () => {
         <section className="py-16 bg-gray-50" id="crops">
             <div className="container mx-auto px-4">
                 <SectionHeader title="المحاصيل الزراعية" />
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {crops.map((crop, index) => (
                         <ServiceCard
                             key={crop.id || index} // Assuming crop object has an 'id' field
                             cardIndex={index}
-                            title={crop.title}
+                            title={crop.arabicTitle}
                             imageSrc={`${import.meta.env.VITE_API_URL_FRONT}${crop.imageUrl}`}
                             bgColor="bg-green-500" // Or dynamic bgColor based on crop
                             linkText="اقرأ المزيد"
