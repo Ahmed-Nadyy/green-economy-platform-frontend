@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import bg1 from "../assets/about/bg1.png";
 import SectionHeader from "./Services/ui/SectionHeader";
+import { useTranslation } from "react-i18next";
 
 const features = [
   {
     id: 1,
-    title: "التواصل مع الخبراء",
-    description: "ربط المزارعين بالخبراء الزراعيين للحصول على الدعم والمشورة.",
+    title: "Connect with experts",
+    description: "Connecting farmers with agricultural experts for support and advice.",
     highlighted: true,
     icon: (
       <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
@@ -16,8 +17,8 @@ const features = [
   },
   {
     id: 2,
-    title: "حلول زراعية",
-    description: "حلول مبتكرة للمشكلات الزراعية بالاعتماد على خبرات المجتمع والخبراء",
+    title: "Agricultural Solutions",
+    description: "Innovative solutions to agricultural problems based on community and expert expertise",
     highlighted: false,
     icon: (
       <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
@@ -27,8 +28,8 @@ const features = [
   },
   {
     id: 3,
-    title: "تبادل المعرفة",
-    description: " توفير منصة للمزارعين لتبادل المعرفة والخبرات حول أفضل الممارسات الزراعية والتقنيات الحديثة.",
+    title: "Knowledge exchange",
+    description: "Providing a platform for farmers to exchange knowledge and experiences on best agricultural practices and modern technologies.",
     highlighted: true,
     icon: (
       <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
@@ -38,8 +39,8 @@ const features = [
   },
   {
     id: 4,
-    title: "تسويق المنتجات",
-    description: "منصة لتسويق المنتجات الزراعية وربط المزارعين بالأسواق المحلية والعالمية",
+    title: "Product Marketing",
+    description: "A platform for marketing agricultural products and connecting farmers to local and global markets.",
     highlighted: false,
     icon: (
       <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
@@ -49,8 +50,8 @@ const features = [
   },
   {
     id: 5,
-    title: "دعم فني",
-    description: "دعم فني متخصص للمزارعين لمساعدتهم في حل المشكلات التقنية والزراعية",
+    title: "Technical support",
+    description: "Specialized technical support for farmers to help them solve technical and agricultural problems.",
     highlighted: true,
     icon: (
       <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
@@ -60,8 +61,8 @@ const features = [
   },
   {
     id: 6,
-    title: "تدريب وتأهيل",
-    description: "توفير فرص التدريب والتأهيل للمزارعين لرفع كفاءتهم وقدراته",
+    title: "Training and qualification",
+    description: "Providing training and qualification opportunities for farmers to raise their efficiency and capabilities.",
     highlighted: false,
     icon: (
       <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
@@ -73,7 +74,9 @@ const features = [
 
 const About = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
-
+  const { t } = useTranslation();
+  const { i18n } = useTranslation();
+  const currentLang = i18n.language || 'en';
   return (
     <>
       <div className="relative min-h-screen w-full">
@@ -92,9 +95,9 @@ const About = () => {
         <div className="relative z-10 flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto text-center">
             {/* Main Content */}
-]            <div className="bg-black bg-opacity-30 rounded-lg p-8 sm:p-12 backdrop-blur-sm">
-              <h1 className="text-white text-xl sm:text-2xl lg:text-2xl leading-relaxed mb-6 font-thin" dir="rtl">
-                نادي الاقتصاد الاخضر هو إحدى مشروعات مؤسسة تنمية الاسرة المصرية التي تعمل علي نشر الوعي بالقطاع الزراعي وتعد مركزا للابتكار الإبداعي في مجال قطاع الزراعة ومن خلال أنشطة هذا المشروع أطلقت المؤسسة منصتها الالكترونية (منصة نادي الاقتصاد الأخضر) للمزارع المصري وهي مجتمع افتراضي يجمع بين المزارعين والمهتمين بالزراعة لتبادل المعرفة والخبرات، والتواصل مع الخبراء، والتعاون في حل المشكلات التي تواجههم منصة الكترونية باستخدام الاساليب التفاعلية التي تربط بين مختلف أطراف القطاع الزراعي، مثل المزارعين، والتجار، والموردين، والمستهلكين.
+            <div className="bg-black bg-opacity-30 rounded-lg p-8 sm:p-12 backdrop-blur-sm">
+              <h1 className="text-white text-xl sm:text-2xl lg:text-2xl leading-relaxed mb-6 font-thin">
+                {t("The Green Economy Club is one of the projects of the Egyptian Family Development Foundation, which works to spread awareness about the agricultural sector and is a center for creative innovation in the agricultural sector. Through the activities of this project, the Foundation launched its electronic platform (the Green Economy Club Platform) for Egyptian farmers. It is a virtual community that brings together farmers and those interested in agriculture to exchange knowledge and experiences, communicate with experts, and cooperate in solving the problems they face. The electronic platform uses interactive methods that connect various parties in the agricultural sector, such as farmers, traders, suppliers, and consumers.")}
               </h1>
             </div>
           </div>
@@ -119,7 +122,7 @@ const About = () => {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <SectionHeader title="أهداف النادي الإلكتروني الزراعي" />
+          <SectionHeader title={t("Agricultural Electronic Club Objectives")} />
 
           {/* Goals Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -160,7 +163,7 @@ const About = () => {
                   text-xl font-bold mb-4 transition-colors duration-300
                   ${feature.highlighted ? 'text-white' : 'text-gray-800 group-hover:text-green-600'}
                 `}>
-                    {feature.title}
+                    {t(feature.title)}
                   </h3>
 
                   <p className={`
@@ -170,7 +173,7 @@ const About = () => {
                       : 'text-gray-600 group-hover:text-gray-700'
                     }
                 `}>
-                    {feature.description}
+                    {t(feature.description)}
                   </p>
                 </div>
 
@@ -185,14 +188,14 @@ const About = () => {
 
         </div>
       </section>
-      
+
       {/* فوائد المنصة الزراعية Section */}
       <section className="py-16 bg-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <SectionHeader title="فوائد النادي الإلكتروني الزراعي" />
+          <SectionHeader title={t("Benefits of the Agricultural Electronic Club")} />
 
           {/* Benefits Cards */}
-          <div className="space-y-8 text-right">
+          <div className={`space-y-8 ${currentLang == "en" ? "text-left" : "text-right"}`} dir={currentLang == "en" ? "rtl" : "ltr"}>
             {/* Card 1: تسهيل الوصول إلى الأسواق */}
             <div className="bg-gradient-to-r from-green-400 to-green-500 rounded-xl p-4 sm:p-6 shadow-lg relative overflow-hidden">
               <div className="absolute top-0 right-0 p-2 bg-white rounded-bl-lg">
@@ -200,7 +203,7 @@ const About = () => {
                   <path fillRule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zM12 2a1 1 0 01.967.744L14.146 7.2 17.5 9.134a1 1 0 010 1.732l-3.354 1.935-1.18 4.455a1 1 0 01-1.933 0L9.854 12.8 6.5 10.866a1 1 0 010-1.732l3.354-1.935 1.18-4.455A1 1 0 0112 2z" clipRule="evenodd" />
                 </svg>
               </div>
-              
+
               <div className="flex flex-col md:flex-row items-start md:items-center">
                 <div className="w-full md:w-1/4 mb-4 md:mb-0 flex justify-center md:justify-start">
                   <div className="w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-full flex items-center justify-center shadow-md">
@@ -210,20 +213,24 @@ const About = () => {
                   </div>
                 </div>
 
-                <div className="w-full md:w-3/4 text-right">
-                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-2" dir="rtl">تسهيل الوصول إلى الأسواق :</h3>
-                  <ul className="text-white text-base sm:text-lg space-y-2 justify-start" dir="rtl">
+                <div className={`w-full md:w-3/4 ${currentLang == "en" ? "text-left" : "text-right"} md:mt-5`} dir={currentLang == "en" ? "ltr" : "rtl"} >
+                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-2" >{t("Facilitating access to markets :")}</h3>
+                  <ul className="text-white text-base sm:text-lg space-y-2 justify-start" >
                     <li className="flex items-center justify-start" >
                       <svg className="w-4 h-4 sm:w-5 sm:h-5 ml-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span>حيث تتيح للمزارعين طرق الوصول إلى أسواق جديدة، مما يزيد من فرص البيع والتسويق.</span>
+                      <span>
+                        {t("It provides farmers with access to new markets, increasing sales and marketing opportunities.")}
+                      </span>
                     </li>
                     <li className="flex items-center">
                       <svg className="w-4 h-4 sm:w-5 sm:h-5 ml-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span>تساعد التجار والمستهلكين على العثور على المنتجات الزراعية بسهولة وشفافية.</span>
+                      <span>
+                        {t("Helping traders and consumers find agricultural products easily and transparently.")}
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -246,25 +253,29 @@ const About = () => {
                     </svg>
                   </div>
                 </div>
-                <div className="w-full md:w-3/4 text-right">
-                  <h3 className="text-xl sm:text-2xl font-bold text-green-600 mb-2" dir="rtl">تحسين الكفاءة والإنتاجية :</h3>
-                  <ul className="text-gray-700 text-base sm:text-lg space-y-2 justify-start" dir="rtl">
+                <div className={`w-full md:w-3/4 ${currentLang == "en" ? "text-left" : "text-right"} md:mt-5`} dir={currentLang == "en" ? "ltr" : "rtl"}>
+                  <h3 className="text-xl sm:text-2xl font-bold text-green-600 mb-2" dir={currentLang == "en" ? "ltr" : "rtl"}>{t("Improve efficiency and productivity :")}</h3>
+                  <ul className="text-gray-700 text-base sm:text-lg space-y-2 justify-start" dir={currentLang == "en" ? "ltr" : "rtl"}>
                     <li className="flex items-center ">
                       <svg className="w-4 h-4 sm:w-5 sm:h-5 ml-2 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span>توفر معلومات حول أفضل الممارسات الزراعية، والتقنيات الحديثة، وإدارة الموارد.</span>
+                      <span>
+                        {t("Provides information on best agricultural practices, modern technologies, and resource management.")}
+                      </span>
                     </li>
                     <li className="flex items-center ">
                       <svg className="w-4 h-4 sm:w-5 sm:h-5 ml-2 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span>تساعد في إدارة المخزون، وتتبع العمليات الزراعية، وتحسين سلسلة التوريد.</span>
+                      <span>
+                        {t("Helps manage inventory, track agricultural operations, and improve the supply chain.")}
+                      </span>
                     </li>
                   </ul>
                 </div>
               </div>
-              <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-green-100 rounded-full"></div>
+              {currentLang == "ar" ? <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-green-100 rounded-full"></div> : ""}
             </div>
 
             {/* Card 3: تعزيز الشمول المالي */}
@@ -284,10 +295,12 @@ const About = () => {
                     </svg>
                   </div>
                 </div>
-                <div className="w-full md:w-3/4 text-right">
-                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-2" dir="rtl">تعزيز الشمول المالي :</h3>
-                  <p className="text-white text-base sm:text-lg" dir="rtl">
-                    توفر حلولًا للتمويل الزراعي، مثل عرض للجهات التي تقدم القروض الصغيرة، والتأمين الزراعي، مما يساعد المزارعين على الاستثمار وتطوير أعمالهم.
+                <div className={`w-full md:w-3/4 ${currentLang == "en" ? "text-left" : "text-right"} md:mt-5`} dir={currentLang == "en" ? "ltr" : "rtl"}>
+                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-2" dir={currentLang == "en" ? "ltr" : "rtl"}>
+                    {t("Promoting financial inclusion :")}
+                  </h3>
+                  <p className="text-white text-base sm:text-lg" dir={currentLang == "en" ? "ltr" : "rtl"}>
+                    {t("It provides agricultural financing solutions, such as offering microfinance providers and agricultural insurance, helping farmers invest and grow their businesses.")}
                   </p>
                 </div>
               </div>
@@ -309,25 +322,32 @@ const About = () => {
                     </svg>
                   </div>
                 </div>
-                <div className="w-full md:w-3/4 text-right">
-                  <h3 className="text-xl sm:text-2xl font-bold text-green-600 mb-2 " dir="rtl">دعم التنمية المستدامة :</h3>
-                  <ul className="text-gray-700 text-base sm:text-lg space-y-2 justify-start" dir="rtl">
+                <div className={`w-full md:w-3/4 ${currentLang == "en" ? "text-left" : "text-right"} md:mt-5`} dir={currentLang == "en" ? "ltr" : "rtl"}>
+                  <h3 className="text-xl sm:text-2xl font-bold text-green-600 mb-2 " dir={currentLang == "en" ? "ltr" : "rtl"}>
+                    {t("Supporting sustainable development :")}
+                  </h3>
+                  <ul className="text-gray-700 text-base sm:text-lg space-y-2 justify-start" dir={currentLang == "en" ? "ltr" : "rtl"}>
                     <li className="flex items-center">
                       <svg className="w-4 h-4 sm:w-5 sm:h-5 ml-2 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span>حيث تشجع على تبني ممارسات زراعية مستدامة، وتحسين إدارة الموارد الطبيعية، الحفاظ على البيئة.</span>
+                      <span>
+                        {t("It encourages the adoption of sustainable agricultural practices, improved management of natural resources, and environmental conservation.")}
+                      </span>
                     </li>
                     <li className="flex items-center">
                       <svg className="w-4 h-4 sm:w-5 sm:h-5 ml-2 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span>والاسهام في تقليل الفاقد من الغذاء، وتحسين الأمن الغذائي.</span>
+                      <span>
+                        {t("Contributing to reducing food loss and improving food security.")}
+                      </span>
                     </li>
                   </ul>
                 </div>
               </div>
-              <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-green-100 rounded-full"></div>
+              {currentLang == "ar" ? <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-green-100 rounded-full"></div> : ""}
+
             </div>
           </div>
         </div>

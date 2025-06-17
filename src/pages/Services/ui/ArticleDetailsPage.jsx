@@ -1,11 +1,17 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SectionHeader from './SectionHeader';
+import { useTranslation } from 'react-i18next';
+import { t } from 'i18next';
 
 const ArticleDetailsPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const article = location.state?.article;
+    const { i18n } = useTranslation();
+    const currentLang = i18n.language || 'en';
+    console.log(article);
+    
 
     if (!article) {
         return navigate('/services');
@@ -14,14 +20,14 @@ const ArticleDetailsPage = () => {
     return (
         <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8" dir="rtl">
             <div className="max-w-5xl mx-auto">
-                <SectionHeader title={article.title} />
+                <SectionHeader title={currentLang=="en"?article.title:article.arabicTitle} />
 
                 {/* Main Content Container */}
                 <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
                     {/* Hero Image Section */}
                     <div className="relative h-64 sm:h-80 md:h-96 bg-green-50">
                         <img 
-                            src={article.image} 
+                            src={`${import.meta.env.VITE_API_URL_FRONT}${article.imageUrl}`}
                             alt={article.title} 
                             className="w-full h-full object-cover"
                         />
@@ -32,46 +38,46 @@ const ArticleDetailsPage = () => {
                     <div className="p-6 sm:p-8 md:p-10">
                         {/* Description */}
                         <div className="bg-green-50 rounded-xl p-6 mb-8">
-                            <h3 className="text-xl font-bold text-green-800 mb-4">نبذة مختصرة</h3>
-                            <p className="text-gray-700 leading-relaxed">{article.description}</p>
+                            <h3 className="text-xl font-bold text-green-800 mb-4">{t("Brief summary")}</h3>
+                            <p className="text-gray-700 leading-relaxed">{currentLang=="en"?article.description:article.arabicDescription}</p>
                         </div>
 
                         {/* Article Sections */}
                         <div className="space-y-8">
                             {/* Introduction */}
                             <section className="bg-white rounded-xl border-2 border-green-200 p-6">
-                                <h3 className="text-lg font-bold text-green-700 mb-4">المقدمة</h3>
-                                <p className="text-gray-700 leading-relaxed">{article.introduction}</p>
+                                <h3 className="text-lg font-bold text-green-700 mb-4">{t("Introduction")}</h3>
+                                <p className="text-gray-700 leading-relaxed">{currentLang=="en"?article.intro:article.arabicIntro}</p>
                             </section>
 
                             {/* Concept Definition */}
                             <section className="bg-white rounded-xl border-2 border-green-200 p-6">
                                 <h3 className="text-lg font-bold text-green-700 mb-4">
-                                    تعريف المفهوم أو المشكلة الزراعية
+                                    {t("Definition of the agricultural concept or problem")}
                                 </h3>
-                                <p className="text-gray-700 leading-relaxed">{article.conceptDefinition}</p>
+                                <p className="text-gray-700 leading-relaxed">{currentLang=="en"?article.issueDefinition:article.arabicIssueDefinition}</p>
                             </section>
 
                             {/* Topic Importance */}
                             <section className="bg-white rounded-xl border-2 border-green-200 p-6">
-                                <h3 className="text-lg font-bold text-green-700 mb-4">أهمية الموضوع</h3>
-                                <p className="text-gray-700 leading-relaxed">{article.topicImportance}</p>
+                                <h3 className="text-lg font-bold text-green-700 mb-4">{t("Importance of the topic")}</h3>
+                                <p className="text-gray-700 leading-relaxed">{currentLang=="en"?article.importance:article.arabicImportance}</p>
                             </section>
 
                             {/* Scientific Guidelines */}
                             <section className="bg-green-50 rounded-xl p-6">
                                 <h3 className="text-xl font-bold text-green-800 mb-4">
-                                    الخطوات والنصائح الإرشادية العلمية
+                                {t("Scientific guidelines and advice")}                                    
                                 </h3>
                                 <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
-                                    {article.scientificGuidelines}
+                                    {currentLang=="en"?article.practicalSteps:article.arabicPracticalSteps}
                                 </p>
                             </section>
 
                             {/* Recommendations */}
                             <section className="bg-green-100 rounded-xl p-6">
-                                <h3 className="text-xl font-bold text-green-800 mb-4">التوصيات</h3>
-                                <p className="text-gray-700 leading-relaxed">{article.recommendations}</p>
+                                <h3 className="text-xl font-bold text-green-800 mb-4">{t("Recommendations")}</h3>
+                                <p className="text-gray-700 leading-relaxed">{currentLang=="en"?article.recommendations:article.arabicRecommendations}</p>
                             </section>
                         </div>
 
@@ -81,7 +87,7 @@ const ArticleDetailsPage = () => {
                                 onClick={() => navigate('/services')}
                                 className="bg-green-600 text-white px-8 py-3 rounded-full hover:bg-green-700 transition-colors duration-300"
                             >
-                                العودة للخدمات
+                               {t("Back to Services")}
                             </button>
                         </div>
                     </div>

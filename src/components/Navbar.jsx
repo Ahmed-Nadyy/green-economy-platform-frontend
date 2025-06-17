@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { t } = useTranslation();
-  console.log(t);
   
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
