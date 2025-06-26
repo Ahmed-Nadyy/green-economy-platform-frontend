@@ -166,7 +166,7 @@ const AdminServices = () => {
       </div>
     </div>
   );
-  console.log(currentItem);
+  console.log(currentItem?.imageUrl?.charAt(0)=="/");
   
   return (
     <div className="rounded-lg shadow-md px-2 sm:px-4 py-4">
@@ -293,11 +293,11 @@ const AdminServices = () => {
                 <label className="block text-right text-gray-700 text-sm font-bold mb-2">صورة</label>
                 <div className="mt-1 flex justify-center px-3 sm:px-6 pt-3 sm:pt-5 pb-3 sm:pb-6 border-2 border-gray-300 border-dashed rounded-md">
                   <div className="space-y-2 text-center">
-                    {currentItem && currentItem.imageUrl ? (
+                    {currentItem  ? (
                       <div className="mb-3">
                         <img
-                          src={currentItem?.imageUrl?.startsWith('http') ? currentItem.imageUrl : `${import.meta.env.VITE_API_URL_FRONT}${currentItem?.imageUrl}`}
-                          alt="Current image"
+                          src={currentItem?.imageUrl?.charAt(0)=="/" ? `${import.meta.env.VITE_API_URL_FRONT}${currentItem?.imageUrl}`: currentItem.imageUrl }
+                          alt={currentItem.imageUrl}
                           className="mx-auto h-24 sm:h-32 w-auto rounded-md shadow-md"
                         />
                       </div>
@@ -613,13 +613,13 @@ const AdminServices = () => {
                             required
                           >
                             <option value="">اختر نوع المحصول</option>
-                            <option value="حبوب">حبوب</option>
-                            <option value="خضروات">خضروات</option>
-                            <option value="فاكهة">فاكهة</option>
-                            <option value="محاصيل زيتية">محاصيل زيتية</option>
-                            <option value="محاصيل سكرية">محاصيل سكرية</option>
-                            <option value="أعلاف">أعلاف</option>
-                            <option value="أخرى">أخرى</option>
+<option value="Grains">حبوب</option>
+<option value="Vegetables">خضروات</option>
+<option value="Fruits">فاكهة</option>
+<option value="Oilseeds">محاصيل زيتية</option>
+<option value="Sugar Crops">محاصيل سكرية</option>
+<option value="Fodder">أعلاف</option>
+<option value="Others">أخرى</option>
                           </select>
                         </div>
 
@@ -646,10 +646,10 @@ const AdminServices = () => {
                             required
                           >
                             <option value="">اختر الموسم</option>
-                            <option value="شتوي">شتوي</option>
-                            <option value="صيفي">صيفي</option>
-                            <option value="نيلي">نيلي</option>
-                            <option value="على مدار العام">على مدار العام</option>
+<option value="Winter">شتوي</option>
+<option value="Summer">صيفي</option>
+<option value="Nile">نيلي</option>
+<option value="Year-round">على مدار العام</option>
                           </select>
                         </div>
                       </div>

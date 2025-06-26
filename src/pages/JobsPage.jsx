@@ -3,6 +3,7 @@ import bg1 from "../assets/jobs/bg1.png";
 import jobRequestAPI from "../services/jobRequestAPI";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai';
 
 const JobsPage = () => {
   const [formData, setFormData] = useState({
@@ -13,7 +14,8 @@ const JobsPage = () => {
     email: '',
     experience: ''
   });
-    const { t } = useTranslation();
+
+  const { t } = useTranslation();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -23,12 +25,38 @@ const JobsPage = () => {
     }));
   };
 
-  const handleSubmit = async () => {
-    try {
-      const { data } = await jobRequestAPI.createJobRequest(formData);
-      console.log('Form submitted:', data);
-      toast.success("تم إرسال الطلب بنجاح! ✅", { position: "top-center" });
+  // دالة للتحقق من الحقول
+  const isFormValid = () => {
+    return Object.values(formData).every(value => value.trim() !== '');
+  };
 
+  const handleSubmit = async () => {
+    if (!isFormValid()) {
+      toast.error(
+        <div>
+          <AiOutlineCloseCircle className="inline-block mr-2 text-white" />
+          {t("Please fill out all fields")}
+        </div>,
+        {
+          position: "top-center",
+          className: "bg-red-500 text-white font-bold rounded-lg shadow-lg p-4"
+        }
+      );
+      return;
+    }
+
+    try {
+      await jobRequestAPI.createJobRequest(formData);
+      toast.success(
+        <div>
+          <AiOutlineCheckCircle className="inline-block mr-2 text-white" />
+          {t("Request sent successfully")}
+        </div>,
+        {
+          position: "top-right",
+          className: "bg-green-500 text-white font-bold rounded-lg shadow-lg p-10"
+        }
+      );
       // إعادة تعيين النموذج
       setFormData({
         fullName: '',
@@ -39,8 +67,16 @@ const JobsPage = () => {
         experience: ''
       });
     } catch (error) {
-      console.error("Error submitting form:", error);
-      toast.error("حدث خطأ أثناء إرسال الطلب ❌", { position: "top-center" });
+      toast.error(
+        <div>
+          <AiOutlineCloseCircle className="inline-block mr-2 text-white" />
+          {t(error.response.data.message)}
+        </div>,
+        {
+          position: "top-center",
+          className: "bg-red-500 text-white font-bold rounded-lg shadow-lg p-4"
+        }
+      );
     }
   };
   return (
@@ -177,10 +213,11 @@ const JobsPage = () => {
 
 
               {/* Submit Button */}
-              <div className="pt-4">
+             <div className="pt-4">
                 <button
                   onClick={handleSubmit}
-                  className="w-full bg-black text-white font-bold text-xl py-4 px-8 rounded-xl hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 transition-all duration-300 transform hover:scale-105"
+                  disabled={!isFormValid()} // تعطيل الزر إذا كانت الحقول فارغة
+                  className={`w-full bg-black text-white font-bold text-xl py-4 px-8 rounded-xl hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 transition-all duration-300 transform hover:scale-105 ${!isFormValid() ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
                   {t("Send")}
                 </button>

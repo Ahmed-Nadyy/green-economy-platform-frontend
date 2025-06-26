@@ -6,9 +6,7 @@ import DashboardLayout from '../layouts/DashboardLayout';
 import Home from '../pages/Home';
 import About from '../pages/About';
 import Services from '../pages/Services';
-import Blog from '../pages/GalleryPage';
 import Contact from '../pages/Contact';
-import News from '../pages/JobsPage';
 import NotFound from '../pages/NotFound';
 
 // Admin Pages
@@ -28,7 +26,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <MainLayout />,
-    // errorElement: <NotFound />,
+    errorElement: <NotFound />,
     children: [
       { index: true, element: <Home /> },
       { path: 'about', element: <About /> },

@@ -7,24 +7,24 @@ const Admins = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [currentAdmin, setCurrentAdmin] = useState(null);
   const [newAdmin, setNewAdmin] = useState({
-    name: '',
+    fullName: '',
     email: '',
     password: '',
-    role: '',
-    phone: ''
+    job: '',
+    phoneNumber: ''
   });
 
+  const [admins, setAdmins] = useState([]);
+  const fetchData = async () => {
+    const result = await adminAPI.getAllAdmins();
+    console.log(result.data);
+    setAdmins(result.data);
+  };
   
-  const [admins,setAdmins]=useState([])
-      const fetchData=async()=>{
-     const result= await adminAPI.getAllAdmins();
-     console.log(result.data);
-     
-     setAdmins(result.data)
-    }
-  useEffect(()=>{
+  useEffect(() => {
     fetchData();
-  },[])
+  }, []);
+
   const handleOpenModal = () => {
     setIsEditMode(false);
     setCurrentAdmin(null);
@@ -38,24 +38,21 @@ const Admins = () => {
     setIsModalOpen(true);
   };
 
-    const handleDelete = async(id) => {
-      console.log(id);
-      
+  const handleDelete = async (id) => {
+    console.log(id);
     await adminAPI.deleteAdmin(id);
     fetchData();
-
   };
-
 
   const handleOpenEditModal = (admin) => {
     setIsEditMode(true);
     setCurrentAdmin(admin);
     setNewAdmin({
-      name: admin.fullName,
+      fullName: admin.fullName,
       email: admin.email,
       password: '', 
-      role: admin.job,
-      phone: admin.phoneNumber
+      job: admin.job,
+      phoneNumber: admin.phoneNumber
     });
     setIsModalOpen(true);
   };
@@ -65,11 +62,11 @@ const Admins = () => {
     setIsEditMode(false);
     setCurrentAdmin(null);
     setNewAdmin({
-      name: '',
+      fullName: '',
       email: '',
       password: '',
-      role: '',
-      phone: ''
+      job: '',
+      phoneNumber: ''
     });
   };
 
@@ -81,20 +78,18 @@ const Admins = () => {
     });
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // هنا يمكن إضافة الكود الخاص بإرسال البيانات إلى الخادم
     if (isEditMode) {
       console.log('تم تعديل بيانات المسؤول:', newAdmin);
-      const result=await adminAPI.updateAdmin(currentAdmin.id,newAdmin);
-        if (result.data.status) {
+      const result = await adminAPI.updateAdmin(currentAdmin.id, newAdmin);
+      if (result.data.status) {
         fetchData();
         handleCloseModal();
       }
-
     } else {
       console.log(newAdmin);
-      const result=await adminAPI.addAdmin(newAdmin);
+      const result = await adminAPI.addAdmin(newAdmin);
       if (result.data.status) {
         fetchData();
         handleCloseModal();
@@ -119,85 +114,127 @@ const Admins = () => {
           إضافة مسؤول جديد
         </button>
       </div>
-
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-auto">
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead>
-              <tr className="bg-gray-50">
-                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">المسؤول</th>
-                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">معلومات التواصل</th>
-                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">الدور</th>
-                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">الإجراءات</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {admins.map((admin) => (
-                <tr key={admin.id} className="hover:bg-gray-50 transition-colors duration-200">
-                  <td className="px-6 py-4 text-center">
-                    <div className="flex flex-col sm:flex-row sm:items-center">
-                      <div className="flex-shrink-0 h-10 w-10 bg-green-100 rounded-full flex items-center justify-center">
-                        <span className="text-green-600 font-medium text-sm">
-                          {admin.fullName.charAt(0).toUpperCase()}
-                        </span>
-                      </div>
-                      <div className="mt-2 sm:mt-0 sm:mr-4">
-                        <div className="text-sm font-medium text-gray-900">{admin.fullName}</div>
-                        <div className="text-sm text-gray-500 sm:hidden">
-                          <div className="mt-1 flex items-center">
-                            <FaEnvelope className="ml-1 h-3 w-3" />
-                            <span className="truncate">{admin.email}</span>
-                          </div>
-                          <div className="mt-1 flex items-center">
-                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                              {admin.job}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap hidden sm:table-cell">
-                    <div className="space-y-1">
-                      <div className="flex items-center text-sm text-gray-600">
-                        <FaEnvelope className="ml-2 h-4 w-4 text-gray-400" />
-                        <span className="truncate">{admin.email}</span>
-                      </div>
-                      <div className="flex items-center text-sm text-gray-600">
-                        <FaPhone className="ml-2 h-4 w-4 text-gray-400" />
-                        <span dir="ltr">{admin.phoneNumber}</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap hidden sm:table-cell">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                      {admin.job}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
-                    <div className="flex items-center justify-end gap-3">
-                      <button
-                        onClick={() => handleOpenEditModal(admin)}
-                        className="text-blue-600 hover:text-blue-900 transition-colors duration-200 p-1"
-                        title="تعديل"
-                      >
-                        <FaEdit className="h-5 w-5" />
-                      </button>
-                      <button 
-                        onClick={() => handleDelete(admin.id)}
-                        className="text-red-600 hover:text-red-900 transition-colors duration-200 p-1"
-                        title="حذف"
-                      >
-                        <FaTrash className="h-5 w-5" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+  <div className="sm:hidden">
+    {/* عرض كروت على الشاشات الصغيرة */}
+    {admins.map((admin) => (
+      <div key={admin.id} className="bg-white shadow-sm border border-gray-200 mb-4 rounded-lg p-4">
+        <div className="flex items-center">
+          <div className="flex-shrink-0 h-10 w-10 bg-green-100 rounded-full flex items-center justify-center">
+            <span className="text-green-600 font-medium text-sm">{admin.fullName.charAt(0).toUpperCase()}</span>
+          </div>
+          <div className="mr-2">
+            <div className="text-sm text-gray-500 mt-1">
+              <div className="text-sm font-medium text-gray-900 text-start">{admin.fullName}</div>
+              <div className="flex items-center">
+                <FaEnvelope className="ml-1 h-3 w-3" />
+                <span>{admin.email}</span>
+              </div>
+              <div className="flex items-center mt-1">
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                  {admin.job}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="mt-4 flex justify-between items-center">
+          <button
+            onClick={() => handleOpenEditModal(admin)}
+            className="text-blue-600 hover:text-blue-900 transition-colors duration-200 p-1"
+            title="تعديل"
+          >
+            <FaEdit className="h-5 w-5" />
+          </button>
+          <button
+            onClick={() => handleDelete(admin.id)}
+            className="text-red-600 hover:text-red-900 transition-colors duration-200 p-1"
+            title="حذف"
+          >
+            <FaTrash className="h-5 w-5" />
+          </button>
         </div>
       </div>
+    ))}
+  </div>
+<div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-x-auto">
+
+  <div className="hidden sm:block">
+    {/* عرض الجدول على الشاشات الكبيرة */}
+    <table className="min-w-full divide-y divide-gray-200">
+      <thead>
+        <tr className="bg-gray-50">
+          <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">المسؤول</th>
+          <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">معلومات التواصل</th>
+          <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">الدور</th>
+          <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">الإجراءات</th>
+        </tr>
+      </thead>
+      <tbody className="bg-white divide-y divide-gray-200">
+        {admins.map((admin) => (
+          <tr key={admin.id} className="hover:bg-gray-50 transition-colors duration-200">
+            <td className="px-6 py-4 text-center">
+              <div className="flex flex-col sm:flex-row sm:items-center">
+                <div className="flex-shrink-0 h-10 w-10 bg-green-100 rounded-full flex items-center justify-center">
+                  <span className="text-green-600 font-medium text-sm">{admin.fullName.charAt(0).toUpperCase()}</span>
+                </div>
+                <div className="mt-2 sm:mt-0 sm:mr-4">
+                  <div className="text-sm font-medium text-gray-900">{admin.fullName}</div>
+                  <div className="text-sm text-gray-500 sm:hidden">
+                    <div className="mt-1 flex items-center">
+                      <FaEnvelope className="ml-1 h-3 w-3" />
+                      <span className="truncate">{admin.email}</span>
+                    </div>
+                    <div className="mt-1 flex items-center">
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        {admin.job}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap hidden sm:table-cell">
+              <div className="space-y-1">
+                <div className="flex items-center text-sm text-gray-600">
+                  <FaEnvelope className="ml-2 h-4 w-4 text-gray-400" />
+                  <span className="truncate">{admin.email}</span>
+                </div>
+                <div className="flex items-center text-sm text-gray-600">
+                  <FaPhone className="ml-2 h-4 w-4 text-gray-400" />
+                  <span dir="ltr">{admin.phoneNumber}</span>
+                </div>
+              </div>
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap hidden sm:table-cell">
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                {admin.job}
+              </span>
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
+              <div className="flex items-center justify-end gap-3">
+                <button
+                  onClick={() => handleOpenEditModal(admin)}
+                  className="text-blue-600 hover:text-blue-900 transition-colors duration-200 p-1"
+                  title="تعديل"
+                >
+                  <FaEdit className="h-5 w-5" />
+                </button>
+                <button
+                  onClick={() => handleDelete(admin.id)}
+                  className="text-red-600 hover:text-red-900 transition-colors duration-200 p-1"
+                  title="حذف"
+                >
+                  <FaTrash className="h-5 w-5" />
+                </button>
+              </div>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
+
 
       {/* Modal */}
       {isModalOpen && (

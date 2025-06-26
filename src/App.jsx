@@ -23,7 +23,18 @@ function App() {
 
   return (
     <Provider store={store}>
-      <ToastContainer />
+            <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={i18n.language === 'ar'} // Ensure toast is also RTL for Arabic
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored" // You can change this to 'light' or 'dark' if preferred
+      />
       <RouterProvider router={router} />
     </Provider>
   );

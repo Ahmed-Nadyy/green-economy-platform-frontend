@@ -20,7 +20,7 @@ const Footer = () => {
           {/* Column 1: نادي الاقتصاد الأخضر */}
           <div className="text-center sm:text-right">
             <h3 className="text-[#2ECC71] font-bold text-2xl sm:text-3xl mb-3 sm:mb-4">
-              {t("Green Economy Club")}
+              {t("name")}
             </h3>
             <p className="text-xs sm:text-sm leading-relaxed">
               {t("The Green Economy Club platform is a hub for creative innovation in the agricultural sector. It is an electronic platform that connects various stakeholders in the agricultural sector, such as farmers, traders, suppliers, and consumers, and provides a variety of services, such as information exchange, e-commerce, financing, and agricultural guidance.")}

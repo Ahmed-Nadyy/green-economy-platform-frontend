@@ -14,6 +14,7 @@
     "Agricultural Guidance": "الإرشاد الزراعي",
     "Exchange of information": "تبادل المعلومات",
     "Facilitating access to markets": "تسهيل الوصول إلى الأسواق",
+    "Promoting financial inclusion": "تعزيز الشمول المالي",
     "Promoting financial inclusion :": "تعزيز الشمول المالي :",
     "Supporting sustainable development": "دعم التنمية المستدامة",
     "view more": "اقرأ المزيد",
@@ -85,6 +86,20 @@
     "Definition of the agricultural concept or problem":"تعريف المفهوم أو المشكلة الزراعية",
     "Importance of the topic":"أهمية الموضوع",
     "Scientific guidelines and advice":"الخطوات والنصائح الإرشادية العلمية",
-    "Recommendations":"التوصيات"
+    "Recommendations":"التوصيات",
+    "Email already registered":"البريد الإلكتروني مسجل بالفعل",
+    "Request sent successfully":"تم إرسال الطلب بنجاح",
+    "Please fill out all fields":"الرجاء ملء جميع الحقول",
+        "Grains": "حبوب",
+    "Vegetables": "خضروات",
+    "Fruits": "فاكهة",
+    "Oilseeds": "محاصيل زيتية",
+    "Sugar Crops": "محاصيل سكرية",
+    "Fodder": "أعلاف",
+    "Others": "أخرى",
+    "Winter": "شتوي",
+    "Summer": "صيفي",
+    "Nile": "نيلي",
+    "Year-round": "على مدار العام"
   }
 }

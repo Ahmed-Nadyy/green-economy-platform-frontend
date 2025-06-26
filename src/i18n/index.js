@@ -10,7 +10,7 @@ i18n
       en,
       ar
     },
-    lng: 'en',
+    lng: 'ar',
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false
