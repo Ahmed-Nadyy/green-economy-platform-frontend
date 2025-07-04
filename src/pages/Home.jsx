@@ -1,18 +1,94 @@
-import React from "react";
-import bg1 from "../assets/home/HomeBG.png";
-import bg2 from "../assets/home/Home2.png";
-import bg3 from "../assets/home/Home3.png";
-import cefd from "../assets/home/cefd.png";
-import opi from "../assets/home/opi.png";
-import agri from "../assets/home/agri.png";
-import creativa from "../assets/home/creativa.png";
+import React, { useEffect, useState } from "react";
 import SectionHeader from "./Services/ui/SectionHeader";
 import { useTranslation } from "react-i18next";
-
+import Typewriter from 'typewriter-effect';
+import PartnersAPI from "../services/partnersAPI";
+import { Link } from "react-router-dom";
+import MembersAPI from "../services/MembersAPI";
+import backgroundsAPI from "../services/BackgroundAPI";
 const Home = () => {
   const { t } = useTranslation();
+  const { i18n } = useTranslation();
+  const currentLang = i18n.language || 'en';
+  // const members = [
+  //   {
+  //     name: "محمد أحمد",
+  //     job: "مدير التسويق",
+  //     imageUrl: "background.png",
+  //     description: "يمتلك خبرة واسعة في التسويق الرقمي وإدارة الحملات الإعلانية."
+  //   },
+  //     {
+  //     name: "محمد أحمد",
+  //     job: "مدير التسويق",
+  //     imageUrl: "background.png",
+  //     description: "يمتلك خبرة واسعة في التسويق الرقمي وإدارة الحملات الإعلانية."
+  //   },
+  //     {
+  //     name: "محمد أحمد",
+  //     job: "مدير التسويق",
+  //     imageUrl: "background.png",
+  //     description: "يمتلك خبرة واسعة في التسويق الرقمي وإدارة الحملات الإعلانية."
+  //   },
+  //     {
+  //     name: "محمد أحمد",
+  //     job: "مدير التسويق",
+  //     imageUrl: "background.png",
+  //     description: "يمتلك خبرة واسعة في التسويق الرقمي وإدارة الحملات الإعلانية."
+  //   },
+  //     {
+  //     name: "محمد أحمد",
+  //     job: "مدير التسويق",
+  //     imageUrl: "background.png",
+  //     description: "يمتلك خبرة واسعة في التسويق الرقمي وإدارة الحملات الإعلانية."
+  //   },
+  //     {
+  //     name: "محمد أحمد",
+  //     job: "مدير التسويق",
+  //     imageUrl: "background.png",
+  //     description: "يمتلك خبرة واسعة في التسويق الرقمي وإدارة الحملات الإعلانية."
+  //   },  {
+  //     name: "محمد أحمد",
+  //     job: "مدير التسويق",
+  //     imageUrl: "background.png",
+  //     description: "يمتلك خبرة واسعة في التسويق الرقمي وإدارة الحملات الإعلانية."
+  //   },  {
+  //     name: "محمد أحمد",
+  //     job: "مدير التسويق",
+  //     imageUrl: "background.png",
+  //     description: "يمتلك خبرة واسعة في التسويق الرقمي وإدارة الحملات الإعلانية.يمتلك خبرة واسعة في التسويق الرقمي وإدارة الحملات الإعلانية."
+  //   },
+  // ];
+  const [allPartners, setAllPartners] = useState(null);
+  const [members, setMembers] = useState(null);
+  const [platformUrl, setPlatformUrl] = useState(null);
+  const [institutionWordUrl, setInstitutionWordUrl] = useState(null);
+  const [golesUrl, setGolesUrl] = useState(null);
+  useEffect(() => {
+    async function fetchAllPartners() {
+      try {
+        const response = await PartnersAPI.getAllPartners();
+        const response2 = await MembersAPI.getAllMember();
+        const response3 = await backgroundsAPI.getSection(
+          {
+            sections: ['platform', 'institutionWord', 'goles']
+          }
+        );
+        console.log(response3?.data.data);
+        
+        response3?.data?.data.map((bac)=>{
+          if(bac.section=="platform") setPlatformUrl(bac.url);
+          if(bac.section=="institutionWord") setInstitutionWordUrl(bac.url);
+          if(bac.section=="goles") setGolesUrl(bac.url);
+        })
+        setAllPartners(response.data);
+        setMembers(response2.data)
+      } catch (error) {
+        console.error("Failed to fetch contact info:", error);
+      }
+    }
 
-
+    fetchAllPartners();
+  }, []);
   return (
     <>
       <div className="relative min-h-screen w-full">
@@ -20,7 +96,7 @@ const Home = () => {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: bg1 ? `url(${bg1})` : 'none',
+            backgroundImage:platformUrl ? `url(${import.meta.env.VITE_API_URL_FRONT}${platformUrl})` : 'none',
           }}
         >
           {/* Dark overlay to reduce brightness */}
@@ -28,17 +104,33 @@ const Home = () => {
         </div>
 
         {/* Content Section */}
-        <div className="relative z-10 flex items-center justify-center min-h-screen px-3 sm:px-4 md:px-6 lg:px-8">
+        <div className={`relative z-10 flex items-center justify-center min-h-screen px-3 sm:px-4 md:px-6 lg:px-8 `}>
           <div className="max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto text-center w-full">
-            {/* Main Content */}
             <div className="bg-black bg-opacity-30 rounded-lg p-4 sm:p-6 md:p-8 lg:p-12 backdrop-blur-sm">
-              <h1 className="text-white text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl leading-relaxed mb-4 sm:mb-6 font-thin" dir="rtl">
-
-                {t("The Green Economy Club platform is a hub for creative innovation in the agricultural sector. It is an electronic platform that connects various stakeholders in the agricultural sector, such as farmers, traders, suppliers, and consumers, and provides a variety of services, such as information exchange, e-commerce, financing, and agricultural guidance.")}
+              <h1
+                className={`text-white text-[1.3rem] leading-relaxed font-thin ${currentLang == "en" ? "text-left" : "text-right"}`}
+                dir={currentLang == "en" ? "ltr" : "rtl"}
+                style={{ maxWidth: '850px', margin: '0 auto' }}
+              >
+                <Typewriter
+                  options={{
+                    strings: [
+                      t("The Green Economy Club platform is a hub for creative innovation in the agricultural sector. It is an electronic platform that connects various stakeholders in the agricultural sector, such as farmers, traders, suppliers, and consumers, and provides a variety of services, such as information exchange, e-commerce, financing, and agricultural guidance.")
+                    ],
+                    autoStart: true,
+                    loop: false,
+                    delay: 10,
+                    deleteSpeed: 0,
+                    pauseFor: 999999,
+                  }}
+                />
               </h1>
             </div>
           </div>
         </div>
+
+
+
 
         {/* Scroll Indicator */}
         <div className="absolute bottom-16 sm:bottom-20 md:bottom-24 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
@@ -55,41 +147,44 @@ const Home = () => {
 
           {/* Partners Grid */}
           <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 items-center justify-items-center">
-            {/* Partner 1 - CEFD */}
-            <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 w-full max-w-xs h-24 sm:h-28 md:h-32 flex items-center justify-center hover:shadow-lg transition-shadow">
-              <div className="text-center">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto mb-2 bg-gradient-to-br from-blue-600 to-green-400 rounded-full flex items-center justify-center p-2">
-                  <img src={cefd} alt="CEFD" className="w-full h-full object-contain" />
+            {allPartners?.map((Partner) => (
+              <a
+                href={Partner?.link}  // Use href for external links
+                target="_blank"
+                rel="noopener noreferrer"  // For security, always include this when opening in a new tab
+                className="bg-white rounded-lg shadow-md p-4 sm:p-6 w-full max-w-xs h-24 sm:h-28 md:h-32 flex items-center justify-center hover:shadow-lg transition-shadow"
+              >
+                <div className="text-center">
+                  <div className="w-24 h-24 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto mb-2 bg-gradient-to-br border border-green-500 p-4 rounded-full flex items-center justify-center ">
+                    <img src={`${import.meta.env.VITE_API_URL_FRONT}${Partner?.logo}`} alt={Partner?.name} className="object-contain" />
+                  </div>
                 </div>
-              </div>
-            </div>
+              </a>
+            ))}
 
-            {/* Partner 2 - Agricultural Bank of Egypt */}
-            <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 w-full max-w-xs h-24 sm:h-28 md:h-32 flex items-center justify-center hover:shadow-lg transition-shadow">
-              <div className="text-center">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto mb-2 bg-gradient-to-br from-blue-600 to-green-400 rounded-full flex items-center justify-center p-2">
-                  <img src={agri} alt="Agricultural Bank" className="w-full h-full object-contain" />
-                </div>
-              </div>
-            </div>
 
-            {/* Partner 3 - PPI Group SOS */}
-            <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 w-full max-w-xs h-24 sm:h-28 md:h-32 flex items-center justify-center hover:shadow-lg transition-shadow">
-              <div className="text-center">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto mb-2 bg-gradient-to-br from-blue-600 to-green-400 rounded-full flex items-center justify-center p-2">
-                  <img src={opi} alt="PPI Group" className="w-full h-full object-contain" />
-                </div>
-              </div>
-            </div>
+          </div>
+        </div>
+      </section>
+      {/* */}
+      <section className={`bg-green-50 py-12 px-6 md:px-16`}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-green-800 mb-8 border-b-4 border-green-600 inline-block pb-2">
+            {t('sectionTitle')}
+          </h2>
 
-            {/* Partner 4 - Creativa */}
-            <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 w-full max-w-xs h-24 sm:h-28 md:h-32 flex items-center justify-center hover:shadow-lg transition-shadow">
-              <div className="text-center">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto mb-2 bg-gradient-to-br from-blue-600 to-green-400 rounded-full flex items-center justify-center p-2">
-                  <img src={creativa} alt="Creativa" className="w-full h-full object-contain" />
-                </div>
-              </div>
-            </div>
+          <ul className="space-y-4 text-lg text-green-900 leading-relaxed list-disc pr-5">
+            {t('items', { returnObjects: true }).map((item, idx) => (
+              <li key={idx}>{item}</li>
+            ))}
+          </ul>
+
+          <div className="mt-10 bg-white rounded-lg shadow p-6 border border-green-200">
+            <h3 className="text-2xl font-semibold text-green-700 mb-4">{t('vision')}</h3>
+            <p className="text-green-900 text-md mb-6">{t('visionText')}</p>
+
+            <h3 className="text-2xl font-semibold text-green-700 mb-4">{t('mission')}</h3>
+            <p className="text-green-900 text-md">{t('missionText')}</p>
           </div>
         </div>
       </section>
@@ -97,10 +192,10 @@ const Home = () => {
       {/* Founder's Message Section */}
       <section className="relative py-12 sm:py-16 md:py-20">
         {/* Background Image with Overlay */}
-        <div
+         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: bg2 ? `url(${bg2})` : 'none',
+            backgroundImage:institutionWordUrl ? `url(${import.meta.env.VITE_API_URL_FRONT}${institutionWordUrl})` : 'none',
           }}
         >
           {/* Dark overlay */}
@@ -113,14 +208,43 @@ const Home = () => {
 
           {/* Message Content */}
           <div className="bg-black bg-opacity-40 rounded-lg p-4 sm:p-6 md:p-8 lg:p-12 backdrop-blur-sm">
-            <div className="text-white text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed space-y-4 sm:space-y-6" dir="rtl">
-              <p>
-                {t("In the era of digital transformation, agricultural e-platforms have become indispensable tools for developing the agricultural sector and achieving food security. These platforms connect farmers, traders, and consumers, providing a variety of services that contribute to improving productivity, increasing income, and enhancing sustainability.")}
-              </p>
-
-              <p>
-                {t("Agricultural e-platforms represent a golden opportunity to achieve a qualitative shift in the agricultural sector, utilizing the latest available agricultural methods and technologies. This development utilizes mechanisms that support environmental conservation, food safety, and maximize returns from this sector. This requires interconnectedness and cooperation between the government, institutions, and companies to support these platforms and provide an appropriate environment for their development and use, in order to achieve sustainable development and prosperity in the agricultural sector.")}
-              </p>
+            <div className="text-white text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed space-y-4 sm:space-y-6" >
+              <h1
+                className={`text-white text-[1.3rem] leading-relaxed font-thin ${currentLang == "en" ? "text-left" : "text-right"}`}
+                dir={currentLang == "en" ? "ltr" : "rtl"}
+                style={{ maxWidth: '850px', margin: '0 auto' }}
+              >
+                <Typewriter
+                  options={{
+                    strings: [
+                      t("In the era of digital transformation, agricultural e-platforms have become indispensable tools for developing the agricultural sector and achieving food security. These platforms connect farmers, traders, and consumers, providing a variety of services that contribute to improving productivity, increasing income, and enhancing sustainability."),
+                    ],
+                    autoStart: true,
+                    loop: false,
+                    delay: 10,
+                    deleteSpeed: 0,
+                    pauseFor: 999999,
+                  }}
+                />
+              </h1>
+              <h1
+                className={`text-white text-[1.3rem] leading-relaxed font-thin ${currentLang == "en" ? "text-left" : "text-right"}`}
+                dir={currentLang == "en" ? "ltr" : "rtl"}
+                style={{ maxWidth: '850px', margin: '3rem auto 0' }}
+              >
+                <Typewriter
+                  options={{
+                    strings: [
+                      t("Agricultural e-platforms represent a golden opportunity to achieve a qualitative shift in the agricultural sector, utilizing the latest available agricultural methods and technologies. This development utilizes mechanisms that support environmental conservation, food safety, and maximize returns from this sector. This requires interconnectedness and cooperation between the government, institutions, and companies to support these platforms and provide an appropriate environment for their development and use, in order to achieve sustainable development and prosperity in the agricultural sector.")
+                    ],
+                    autoStart: true,
+                    loop: false,
+                    delay: 10,
+                    deleteSpeed: 0,
+                    pauseFor: 999999,
+                  }}
+                />
+              </h1>
             </div>
           </div>
         </div>
@@ -141,7 +265,7 @@ const Home = () => {
           </div>
 
           {/* Features Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-10 md:mb-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center justify-center gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-10 md:mb-12">
             {/* Feature 1 */}
             <div className="group">
               <div className="relative bg-gradient-to-br from-green-400 to-green-600 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 h-32 sm:h-40 md:h-48 flex items-center justify-center shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300">
@@ -229,7 +353,7 @@ const Home = () => {
                     </svg>
                   </div>
                   <h3 className="text-white font-bold text-sm sm:text-base md:text-lg leading-tight" dir="rtl">
-                   {t("Promoting financial inclusion")}
+                    {t("Promoting financial inclusion")}
                   </h3>
                 </div>
                 <div className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-4 h-4 sm:w-6 sm:h-6 bg-green-300 rounded-full opacity-70"></div>
@@ -265,7 +389,7 @@ const Home = () => {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: bg3 ? `url(${bg3})` : 'none',
+            backgroundImage: golesUrl ? `url(${import.meta.env.VITE_API_URL_FRONT}${golesUrl})` : 'none',
           }}
         >
           {/* Dark overlay */}
@@ -285,9 +409,26 @@ const Home = () => {
           {/* Goals Content */}
           <div className="flex justify-center">
             <div className="bg-black bg-opacity-50 rounded-xl sm:rounded-2xl p-6 sm:p-8 md:p-10 lg:p-16 backdrop-blur-md max-w-5xl border border-white border-opacity-10 w-full">
-              <p className="text-white text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed text-center font-medium" dir="rtl">
-                {t("Contributing to achieving integration between the green economy, sustainable development, and social empowerment by bringing about positive change in Arab societies among various stakeholders in the agricultural sector.")}
-              </p>
+              <h1
+                className={`text-white text-base sm:text-lg md:text-[1.2rem] lg:text-2xl leading-relaxed text-center font-medium ${currentLang == "en" ? "text-left" : "text-right"}`}
+                dir={currentLang == "en" ? "ltr" : "rtl"}
+                style={{ maxWidth: '850px', margin: '0 auto' }}
+              >
+                <Typewriter
+                  options={{
+                    strings: [
+                      t("Contributing to achieving integration between the green economy, sustainable development, and social empowerment by bringing about positive change in Arab societies among various stakeholders in the agricultural sector.")
+                    ],
+                    autoStart: true,
+                    loop: false,
+                    delay: 10,
+                    deleteSpeed: 0,
+                    pauseFor: 999999,
+                  }}
+                />
+              </h1>
+              {
+              }
 
               {/* Decorative elements */}
               <div className="flex justify-center mt-8 sm:mt-10 md:mt-12 space-x-1">
@@ -303,6 +444,64 @@ const Home = () => {
           <div className="absolute bottom-10 sm:bottom-16 md:bottom-20 right-4 sm:right-6 md:right-10 w-6 h-6 sm:w-8 sm:h-8 md:w-12 md:h-12 border-2 border-green-500 border-opacity-100 rounded-full animate-pulse delay-100"></div>
           <div className="absolute top-1/2 left-8 sm:left-12 md:left-20 w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 bg-green-400 bg-opacity-100 rounded-full animate-bounce"></div>
           <div className="absolute top-1/3 right-6 sm:right-10 md:right-16 w-3 h-3 sm:w-4 sm:h-4 md:w-6 md:h-6 bg-green-500 bg-opacity-100 rounded-full animate-bounce delay-200"></div>
+        </div>
+      </section>
+      {/*Club members */}
+      <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-10 left-10 w-20 h-20 sm:w-32 sm:h-32 bg-green-500 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-10 right-10 w-24 h-24 sm:w-40 sm:h-40 bg-green-400 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 left-1/4 w-16 h-16 sm:w-24 sm:h-24 bg-green-600 rounded-full blur-2xl"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-8 sm:mb-10 md:mb-12">
+            <SectionHeader title={t("Club members")} />
+          </div>
+          <div className="bg-white bg-opacity-30 rounded-lg px-4 sm:px-6 md:px-8 lg:px-12 backdrop-blur-sm mb-9">
+            <h1
+              className={`text-black text-[1.3rem] leading-relaxed font-thin ${currentLang == "en" ? "text-left" : "text-right"}`}
+              dir={currentLang == "en" ? "ltr" : "rtl"}
+              style={{ maxWidth: '850px', margin: '0 auto' }}
+            >
+              <Typewriter
+                options={{
+                  strings: [
+                    t("They are a team of agricultural experts working to unify goals and are the fruit of the continuity of supporting farmers and exchanging experiences and innovation in the field of agriculture.")
+                  ],
+                  autoStart: true,
+                  loop: false,
+                  delay: 10,
+                  deleteSpeed: 0,
+                  pauseFor: 999999,
+                }}
+              />
+            </h1>
+          </div>
+          {/* Features Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center justify-center gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-10 md:mb-12">
+            {members?.map((member, idx) => (
+              <div
+                key={idx}
+                className="bg-white shadow-lg rounded-xl p-6 text-center hover:shadow-2xl transition duration-300 group h-80"
+              >
+                <div className="flex justify-center mb-4">
+                  <img
+                    src={`${import.meta.env.VITE_API_URL_FRONT}${member?.image}`}
+                    alt={member?.name}
+                    className="w-32 h-32 rounded-full object-cover border border-green-500 shadow-md"
+                  />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-800 mb-1 group-hover:text-green-600 transition">
+                  {member?.name}
+                </h3>
+                <p className="text-sm text-gray-500 mb-2 font-medium">{member?.role}</p>
+                <p className="text-sm text-gray-600 line-clamp-4">{member?.bio}</p>
+              </div>
+            ))}
+
+          </div>
         </div>
       </section>
     </>

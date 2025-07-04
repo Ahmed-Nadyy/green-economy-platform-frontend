@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaYoutube, FaTiktok, FaFacebook, FaWhatsapp, FaPhone, FaEnvelope, FaArrowUp } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
+import ContactAPI from "../services/contactsAPI";
 
 const Footer = () => {
   const scrollToTop = () => {
@@ -10,6 +11,20 @@ const Footer = () => {
       behavior: "smooth"
     });
   };
+    const [contactInfo, setContactInfo] = useState(null);  
+
+  useEffect(() => {
+    async function fetchContactInfo() {
+      try {
+        const response = await ContactAPI.getAllMedia(); 
+        setContactInfo(response.data); 
+      } catch (error) {
+        console.error("Failed to fetch contact info:", error);
+      }
+    }
+
+    fetchContactInfo();
+  }, []);
   const { t } = useTranslation();
 
   return (
@@ -73,11 +88,11 @@ const Footer = () => {
             <h3 className="text-[#2ECC71] font-bold text-lg sm:text-xl mb-3 sm:mb-4">{t("Contact US")}</h3>
             <div className="space-y-3 flex flex-col items-center sm:items-end">
               <div className="flex items-center">
-                <span className="text-sm sm:text-base">greeneconomy@gmail.com</span>
+                <span className="text-sm sm:text-base">{contactInfo?.email}</span>
                 <FaEnvelope className="mr-2 text-[#2ECC71]" size={16} />
               </div>
               <div className="flex items-center">
-                <span className="text-sm sm:text-base">+201023536355</span>
+                <span className="text-sm sm:text-base">2{contactInfo?.phoneNumber}+</span>
                 <FaPhone className="mr-2 text-[#2ECC71]" size={16} />
               </div>
             </div>
@@ -100,18 +115,18 @@ const Footer = () => {
           <div className="flex flex-col-reverse sm:flex-row justify-between items-center">
             {/* Social media icons */}
             <div className="flex space-x-3 sm:space-x-4 mt-3 sm:mt-0">
-              <Link to="#" className="bg-white ml-4 text-[#2ECC71] p-1.5 sm:p-2 rounded-full hover:bg-gray-100 transition-transform hover:scale-105">
+              <Link to={contactInfo?.youtubeLink} className="bg-white ml-4 text-[#2ECC71] p-1.5 sm:p-2 rounded-full hover:bg-gray-100 transition-transform hover:scale-105">
                 <FaYoutube size={16} className="sm:w-5 sm:h-5" />
               </Link>
-              <Link to="#" className="bg-white text-[#2ECC71] p-1.5 sm:p-2 rounded-full hover:bg-gray-100 transition-transform hover:scale-105">
+              <Link to={contactInfo?.tiktokLink} className="bg-white text-[#2ECC71] p-1.5 sm:p-2 rounded-full hover:bg-gray-100 transition-transform hover:scale-105">
                 <FaTiktok size={16} className="sm:w-5 sm:h-5" />
               </Link>
-              <Link to="#" className="bg-white text-[#2ECC71] p-1.5 sm:p-2 rounded-full hover:bg-gray-100 transition-transform hover:scale-105">
+              <Link to={contactInfo?.facebookLink} className="bg-white text-[#2ECC71] p-1.5 sm:p-2 rounded-full hover:bg-gray-100 transition-transform hover:scale-105">
                 <FaFacebook size={16} className="sm:w-5 sm:h-5" />
               </Link>
-              <Link to="#" className="bg-white text-[#2ECC71] p-1.5 sm:p-2 rounded-full hover:bg-gray-100 transition-transform hover:scale-105">
+              <a href={`https://wa.me/+2${contactInfo?.whatsappLink}`} className="bg-white text-[#2ECC71] p-1.5 sm:p-2 rounded-full hover:bg-gray-100 transition-transform hover:scale-105">
                 <FaWhatsapp size={16} className="sm:w-5 sm:h-5" />
-              </Link>
+              </a>
             </div>
 
             {/* Copyright */}

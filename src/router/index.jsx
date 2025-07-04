@@ -21,6 +21,10 @@ import GalleryPage from '../pages/GalleryPage';
 import JobsPage from '../pages/JobsPage';
 import CropDetailsPage from '../pages/Services/ui/CropDetailsPage';
 import ArticleDetailsPage from '../pages/Services/ui/ArticleDetailsPage';
+import ContactInfoPage from '../pages/Admin/ContactInfo';
+import BackgroundsPage from '../pages/Admin/Backgrounds';
+import PartnersPage from '../pages/Admin/Partners';
+import MembersPage from '../pages/Admin/Members';
 
 const router = createBrowserRouter([
   {
@@ -57,7 +61,11 @@ const router = createBrowserRouter([
       { index:true, element: <AdminServices /> },
       { path: 'gallery', element: <Gallery /> },
       { path: 'admins', element: <Admins /> },
-      { path: 'jobs', element: <Jobs /> }
+      { path: 'jobs', element: <Jobs /> },
+      { path: 'contacts', element: <ContactInfoPage /> },
+      { path: 'partners', element: <PartnersPage /> },
+      { path: 'members', element: <MembersPage /> },
+      { path: 'backgrounds', element: <BackgroundsPage /> },
     ]
   }
 ]);

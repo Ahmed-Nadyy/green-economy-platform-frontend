@@ -1,4 +1,24 @@
-#root {
-  margin: 0 auto;
-  text-align: center;
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  0%, 100% {
+    border-color: transparent;
+  }
+  50% {
+    border-color: white;
+  }
+}
+
+.typewriter {
+  display: inline-block;
+  animation: typing 4s steps(100, end), blink 0.7s step-end infinite;
+  overflow: hidden;
+  white-space: nowrap;
 }

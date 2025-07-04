@@ -38,6 +38,7 @@
     "Product Marketing": "تسويق المنتجات",
     "Technical support": "دعم فني",
     "Improve efficiency and productivity :": "تحسين الكفاءة والإنتاجية :",
+    "Training and qualification":"التدريب والتأهيل",
     "Providing training and qualification opportunities for farmers to raise their efficiency and capabilities.": "توفير فرص التدريب والتأهيل للمزارعين لرفع كفاءتهم وقدراته",
     "A platform for marketing agricultural products and connecting farmers to local and global markets.": "منصة لتسويق المنتجات الزراعية وربط المزارعين بالأسواق المحلية والعالمية",
     "Agricultural Electronic Club Objectives": "أهداف النادي الإلكتروني الزراعي",
@@ -100,6 +101,21 @@
     "Winter": "شتوي",
     "Summer": "صيفي",
     "Nile": "نيلي",
-    "Year-round": "على مدار العام"
+    "Year-round": "على مدار العام",
+    "Club members":"أعضاء النادي",
+    "sectionTitle": "دور نادي الاقتصاد الأخضر",
+  "items": [
+    "نشر الوعي بالتقنيات الحديثة بمجال الزراعة بين المزارعين.",
+    "تنظيم فعاليات وأنشطة تدعم الابتكار في الزراعة وتشجع على تبني الزراعة التعاقدية والممارسات المستدامة.",
+    "دعم إنشاء منصات رقمية لتبادل المعرفة والخبرات بين المزارعين والخبراء في مجال الزراعة المستدامة.",
+    "دعم إنشاء منصات رقمية تربط المزارعين بالتقنيات الذكية.",
+    "توفير التدريب العملي والتقني للأعضاء.",
+    "بناء شراكات مع مؤسسات بحثية لتبني تقنيات حديثة بالزراعة."
+  ],
+  "vision": "الرؤية",
+  "visionText": "تحقيق تحول نحو اقتصاد زراعي مستدام وذكي بيئيًا، يدعم المجتمعات الريفية ويعزز الإنتاج مع الحفاظ على الموارد الطبيعية.",
+  "mission": "الرسالة",
+  "missionText": "نشر ثقافة الاقتصاد الأخضر بين المزارعين والشباب، وتقديم دعم معرفي وتكنولوجي من خلال تفعيل دور المنصات الالكترونية التفاعلية لنقل الخبرات والمعارف وبناء الوعي  وتطبيق مبادئ التحول الرقمي .",
+  "They are a team of agricultural experts working to unify goals and are the fruit of the continuity of supporting farmers and exchanging experiences and innovation in the field of agriculture.":" هم فريق من الخبراء بمجال الزراعة يعملون على توحيد الاهداف وهم ثمرة الاستمرارية لدعم المزارعين وتبادل الخبرات والابتكار بمجال الزراعة ."
   }
 }
