@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import bg1 from "../assets/contact/bg1.png";
 import { useTranslation } from "react-i18next";
 import Typewriter from 'typewriter-effect';
 import ContactAPI from "../services/contactsAPI";
