@@ -1,6 +1,15 @@
 import { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
-import { FaServicestack, FaImages, FaUsers, FaBriefcase } from 'react-icons/fa';
+import { 
+  FaServicestack, 
+  FaImages, 
+  FaUsers, 
+  FaBriefcase 
+} from 'react-icons/fa';
+import { MdContacts } from 'react-icons/md';
+import { RiUserSharedLine, RiTeamLine } from 'react-icons/ri';
+import { BsFillImageFill } from 'react-icons/bs';
+import { GiPartyPopper } from 'react-icons/gi'; // خيار إضافي للخلفيات إذا كانت احتفالية
 
 const DashboardLayout = () => {
   const [activeLink, setActiveLink] = useState('services');
@@ -8,32 +17,56 @@ const DashboardLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
  const user=JSON.parse(localStorage.getItem("admin"))
  
-  const navLinks = [
-    {
-      id: 'services',
-      title: 'الخدمات المقدمة',
-      icon: <FaServicestack className="w-6 h-6" />,
-      path: '/admin'
-    },
-    {
-      id: 'gallery',
-      title: 'المعرض',
-      icon: <FaImages className="w-6 h-6" />,
-      path: '/admin/gallery'
-    },
-    {
-      id: 'admins',
-      title: 'المسؤولين',
-      icon: <FaUsers className="w-6 h-6" />,
-      path: '/admin/admins'
-    },
-    {
-      id: 'jobs',
-      title: 'طلبات العمل',
-      icon: <FaBriefcase className="w-6 h-6" />,
-      path: '/admin/jobs'
-    }
-  ];
+const navLinks = [
+  {
+    id: 'services',
+    title: 'الخدمات المقدمة',
+    icon: <FaServicestack className="w-6 h-6" />,
+    path: '/admin'
+  },
+  {
+    id: 'gallery',
+    title: 'المعرض',
+    icon: <FaImages className="w-6 h-6" />,
+    path: '/admin/gallery'
+  },
+  {
+    id: 'admins',
+    title: 'المسؤولين',
+    icon: <FaUsers className="w-6 h-6" />,
+    path: '/admin/admins'
+  },
+  {
+    id: 'jobs',
+    title: 'طلبات العمل',
+    icon: <FaBriefcase className="w-6 h-6" />,
+    path: '/admin/jobs'
+  },
+  {
+    id: 'Contact',
+    title: 'بيانات التواصل',
+    icon: <MdContacts className="w-6 h-6" />,
+    path: '/admin/contacts'
+  },
+  {
+    id: 'Partners',
+    title: 'الشركاء',
+    icon: <RiUserSharedLine className="w-6 h-6" />, // أيقونة تعبر عن شراكة
+    path: '/admin/partners'
+  },
+  {
+    id: 'Members',
+    title: 'الأعضاء',
+    icon: <RiTeamLine className="w-6 h-6" />, // فريق
+    path: '/admin/members'
+  },
+  {
+    id: 'Backgrounds',
+    title: 'الخلفيات',
+    icon: <BsFillImageFill className="w-6 h-6" />, // صورة خلفية
+    path: '/admin/backgrounds'
+  },
+];
 
   return (
     <div className="flex h-screen bg-gray-100 overflow-hidden " dir='rtl'>

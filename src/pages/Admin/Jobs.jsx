@@ -17,33 +17,24 @@ const Jobs = () => {
     fetchData();
   }, []) // Added dependency array to prevent infinite loop
 
-  const getStatusBadge = (status) => {
-    switch (status) {
-      case 'approved':
-        return (
-          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-            تمت الموافقة
-          </span>
-        );
-      case 'rejected':
-        return (
-          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-            مرفوض
-          </span>
-        );
-      default:
-        return (
-          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-            قيد المراجعة
-          </span>
-        );
-    }
-  };
 
   const handleViewDetails = (application) => {
     setSelectedApplication(application);
     setIsModalOpen(true);
   };
+  const handleDelete = async (id) => {
+  const confirmDelete = window.confirm("هل أنت متأكد أنك تريد حذف هذا الطلب؟");
+  if (!confirmDelete) return;
+
+  try {
+    await jobRequestAPI.deleteJobRequest(id); // تأكد أن هذا الميثود موجود في jobRequestAPI
+    setJobApplications(prev => prev.filter(app => app.id !== id));
+  } catch (error) {
+    console.error("فشل في حذف الطلب:", error);
+    alert("حدث خطأ أثناء حذف الطلب");
+  }
+};
+
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -66,72 +57,6 @@ const Jobs = () => {
       </div>
 
       <div className="mt-8 bg-white rounded-lg shadow-sm border border-gray-200 overflow-auto">
-        {/* Desktop view */}
-        {/* <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead>
-              <tr className="bg-gray-50">
-                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">المتقدم</th>
-                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">معلومات التواصل</th>
-                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">الوظيفة</th>
-                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">تاريخ التقديم</th>
-                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">المؤهل</th>
-                <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">الإجراءات</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {jobApplications.map((application) => (
-                <tr key={application.id} className="hover:bg-gray-50 transition-colors duration-200">
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0 h-10 w-10 bg-blue-200 rounded-full flex items-center justify-center">
-                        <span className="text-blue-600 font-medium text-sm">
-                          {application.fullName?.charAt(0).toUpperCase()}
-                        </span>
-                      </div>
-                      <div className="mr-4">
-                        <div className="text-sm font-medium text-gray-900">{application.fullName}</div>
-                        {getStatusBadge(application.status)}
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="space-y-1">
-                      <div className="flex items-center text-sm text-gray-600">
-                        <FaEnvelope className="ml-2 h-4 w-4 text-gray-400" />
-                        <span className="truncate max-w-[200px]" dir="ltr">{application.email}</span>
-                      </div>
-                      <div className="flex items-center text-sm text-gray-600">
-                        <FaPhone className="ml-2 h-4 w-4 text-gray-400" />
-                        <span dir="ltr">{application.phoneNumber}</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{application.role}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap hidden lg:table-cell">
-                    <div className="text-sm text-gray-500">{application.updatedAt}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap hidden lg:table-cell">
-                    <div className="text-sm text-gray-500">{application.qualification}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-center">
-                    <button
-                      onClick={() => handleViewDetails(application)}
-                      className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                    >
-                      <FaFileAlt className="ml-1.5 h-4 w-4" />
-                      عرض التفاصيل
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          
-        </div> */}
-
         {/* Mobile view */}
         <div className="divide-y divide-gray-200">
           {jobApplications.map((application) => (
@@ -148,7 +73,13 @@ const Jobs = () => {
                     <div className="text-sm text-gray-500 mt-1">{application.role}</div>
                   </div>
                 </div>
-                {/* {getStatusBadge(application.status)} */}
+                <button
+  onClick={() => handleDelete(application.id)}
+  className=" mt-2 inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+>
+  حذف الطلب
+</button>
+
               </div>
               
               <div className="space-y-2 mb-3">
@@ -236,23 +167,6 @@ const Jobs = () => {
                         </div>
                       </div>
                     </div>
-{/* 
-                    <div className="mt-6 sm:flex sm:flex-row-reverse sm:gap-3">
-                      <button
-                        type="button"
-                        className="w-full sm:w-auto inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                      >
-                        <FaCheck className="ml-1.5 h-4 w-4" />
-                        قبول الطلب
-                      </button>
-                      <button
-                        type="button"
-                        className="mt-3 sm:mt-0 w-full sm:w-auto inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-                      >
-                        <FaTimes className="ml-1.5 h-4 w-4" />
-                        رفض الطلب
-                      </button>
-                    </div> */}
                   </div>
                 </div>
               </div>

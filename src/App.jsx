@@ -6,10 +6,9 @@ import { useTranslation } from 'react-i18next';
 import store from './store';
 import router from './router';
 import './App.css';
-
+// add now
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 function App() {
   const { i18n } = useTranslation();
 
