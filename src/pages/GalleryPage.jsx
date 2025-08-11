@@ -1,9 +1,54 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import galleryAPI from "../services/galleryAPI";
 import SectionHeader from "./Services/ui/SectionHeader";
 import { useTranslation } from "react-i18next";
 import Typewriter from 'typewriter-effect';
 import backgroundsAPI from "../services/BackgroundAPI";
+function CustomYouTubePlayer({ videoId }) {
+    const playerRef = useRef(null);
+
+    useEffect(() => {
+      // تحميل سكريبت YouTube IFrame API إذا لم يكن موجودًا
+      if (!window.YT) {
+        const tag = document.createElement("script");
+        tag.src = "https://www.youtube.com/iframe_api";
+        document.body.appendChild(tag);
+      }
+      const loadPlayer = () => {
+        if (window.YT && window.YT.Player) {
+          playerRef.current = new window.YT.Player("yt-player", {
+            videoId,
+            events: {
+              onReady: (event) => {
+                event.target.playVideo();
+              },
+              onStateChange: (event) => {
+                if (event.data === window.YT.PlayerState.ENDED) {
+                  console.log("الفيديو انتهى");
+                }
+              }
+            },
+            playerVars: {
+              autoplay: 0,
+              // controls: 0,
+              modestbranding: 1,
+              rel: 0,
+              fs: 0,
+              disablekb: 1,
+              iv_load_policy: 3,
+              playsinline: 1
+            }
+          });
+        } else {
+          // Retry if API isn't ready yet
+          setTimeout(loadPlayer, 100);
+        }
+      };
+      loadPlayer();
+    }, [videoId]);
+
+    return <div id="yt-player" style={{ width: "100%", height: "500px" }} />;
+  }
 
 const GalleryPage = () => {
   // State for images
@@ -38,7 +83,7 @@ const THUMBNAILS_PER_VIEW = isSmallScreen ? 3 : 6;
       const allItems = data || [];
 
       const imageItems = allItems.filter(item => item.type === "image");
-      const videoItems = allItems.filter(item => item.type === "video");
+      const videoItems = allItems.filter(item => (item.type === "video" || item.type === "youtube"));
 
       setImages(imageItems);
       setVideos(videoItems);
@@ -217,6 +262,7 @@ const THUMBNAILS_PER_VIEW = isSmallScreen ? 3 : 6;
                 <div className="relative bg-gray-200 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300" style={{ height: "30rem" }}>
                   {selectedImage ? (
                     <img
+                      loading="lazy"
                       src={selectedImage.url}
                       alt={selectedImage.title || 'Gallery Image'}
                       className="w-full h-full object-cover"
@@ -290,6 +336,7 @@ const THUMBNAILS_PER_VIEW = isSmallScreen ? 3 : 6;
                             }`}
                         >
                           <img
+                            loading="lazy"
                             src={image.thumbnail || image.url}
                             alt={image.title || 'Thumbnail'}
                             className="w-full h-full object-cover"
@@ -361,7 +408,10 @@ const THUMBNAILS_PER_VIEW = isSmallScreen ? 3 : 6;
               <div className="mb-8">
                 <div className="relative bg-gray-200 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300  cursor-pointer group" style={{ height: "30rem" }}>
                   {selectedVideo ? (
-                    <video
+                     selectedVideo.type === 'youtube' ? (
+        <CustomYouTubePlayer videoId={selectedVideo.url} />
+      ) : (
+        <video
                       key={selectedVideo.url} // 👈 إجبار الفيديو على إعادة التحميل عند التغيير
                       controls
                       className="w-full h-full object-cover"
@@ -373,6 +423,8 @@ const THUMBNAILS_PER_VIEW = isSmallScreen ? 3 : 6;
                       <source src={selectedVideo.url} type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
+      )
+                    
                   ) : null}
 
 
@@ -444,6 +496,7 @@ const THUMBNAILS_PER_VIEW = isSmallScreen ? 3 : 6;
                             }`}
                         >
                           <img
+                            loading="lazy"
                             src={video.url}
                             alt={video.title || 'Video Thumbnail'}
                             className="w-full h-full object-cover"

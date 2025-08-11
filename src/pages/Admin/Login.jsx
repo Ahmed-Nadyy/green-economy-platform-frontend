@@ -89,13 +89,15 @@ const Login = () => {
             </div>
           )}
 
-          <button
+          <div className='flex justify-center'>
+<button
             type="submit"
             className="w-[250px] bg-green-500 border-white border-2 text-white py-3 px-6 rounded-xl hover:bg-green-600 transition duration-300 font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed mt-6"
             disabled={isLoading}
           >
             {isLoading ? 'جاري تسجيل الدخول...' : 'التالي'}
           </button>
+          </div>
         </form>
       </div>
     </div>

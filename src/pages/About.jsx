@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SectionHeader from "./Services/ui/SectionHeader";
 import { useTranslation } from "react-i18next";
 import Typewriter from 'typewriter-effect';
@@ -76,9 +76,11 @@ const features = [
 const About = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
   const { t } = useTranslation();
+  const [aboutUsUrl, setAboutUsUrl] = useState(null);
   const { i18n } = useTranslation();
   const currentLang = i18n.language || 'en';
-  const [aboutUsUrl, setAboutUsUrl] = useState(null);
+  const [isInView, setIsInView] = useState(false);
+  const sectionRef = useRef(null);
   useEffect(() => {
     async function fetchAllBackground() {
       try {
@@ -98,17 +100,37 @@ const About = () => {
 
     fetchAllBackground();
   }, []);
+   useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.disconnect(); // تحميل لمرة واحدة فقط
+        }
+      },
+      {
+        root: null,
+        threshold: 0.1,
+      }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
   return (
     <>
-      <div className="relative min-h-screen w-full">
-        {/* Background Image with Overlay */}
+      <div ref={sectionRef} className="relative min-h-screen w-full">
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-500"
           style={{
-           backgroundImage:aboutUsUrl ? `url(${import.meta.env.VITE_API_URL_FRONT}${aboutUsUrl})` : 'none',
+            backgroundImage: isInView && aboutUsUrl
+              ? `url(${import.meta.env.VITE_API_URL_FRONT}${aboutUsUrl})`
+              : 'none',
           }}
         >
-          {/* Dark overlay to reduce brightness */}
           <div className="absolute inset-0 bg-black bg-opacity-50"></div>
         </div>
 

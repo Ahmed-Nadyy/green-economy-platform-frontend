@@ -106,7 +106,7 @@ const OTPVerification = () => {
         <p className="text-center text-white mb-8">لقد ارسلنا الى البريد رقم التحقق الرجاء كتابة رقم التحقق</p>
         
         <form onSubmit={handleSubmit} className="space-y-8">
-          <div className="flex justify-center gap-4 mb-6">
+          <div className="flex justify-center gap-4 mb-6" dir='ltr'>
             {verificationCode.map((digit, index) => (
               <input
                 key={index}

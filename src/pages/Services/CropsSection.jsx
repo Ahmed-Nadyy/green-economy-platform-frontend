@@ -37,15 +37,21 @@ const CropsSection = () => {
     }
 
     return (
-        <section className="py-16 bg-white" id="crops">
-            <div className="container mx-auto px-4">
-                <SectionHeader title={t("Learn about agricultural crops")} />
+    <section className="py-16 bg-white" id="crops">
+        <div className="container mx-auto px-4">
+            <SectionHeader title={t("Learn about agricultural crops")} />
+
+            {crops.length === 0 ? (
+                <div className="text-center text-gray-500 mt-8">
+                    {t("No crops available at the moment")}
+                </div>
+            ) : (
                 <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
                     {crops.map((crop, index) => (
                         <ServiceCard
                             key={crop.id}
                             cardIndex={index}
-                            title={currentLang == "en" ? crop.title : crop.arabicTitle}
+                            title={currentLang === "en" ? crop.title : crop.arabicTitle}
                             imageSrc={`${import.meta.env.VITE_API_URL_FRONT}${crop.imageUrl}`}
                             bgColor="bg-green-500"
                             linkText={t("view more")}
@@ -54,9 +60,11 @@ const CropsSection = () => {
                         />
                     ))}
                 </div>
-            </div>
-        </section>
-    );
+            )}
+        </div>
+    </section>
+);
+
 };
 
 export default CropsSection;

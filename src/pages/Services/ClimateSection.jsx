@@ -9,16 +9,17 @@ const ClimateSection = () => {
     const [climateItems, setclimateItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-        const { i18n } = useTranslation();
-        const currentLang = i18n.language || 'en';
+    const { i18n } = useTranslation();
+    const currentLang = i18n.language || 'en';
+
     useEffect(() => {
         const fetchclimateItems = async () => {
             try {
-                const response = await blogAPI.getArticlesBySubType("climate"); // Fetch guidance data
-                setclimateItems(response.data); // Assuming response contains an array of items
+                const response = await blogAPI.getArticlesBySubType("climate");
+                setclimateItems(response.data || []);
                 setLoading(false);
             } catch (err) {
-                setError(err);
+                setError(t("Failed to load articles."));
                 setLoading(false);
             }
         };
@@ -27,11 +28,24 @@ const ClimateSection = () => {
     }, []);
 
     if (loading) {
-        return <div>جاري تحميل المقالات...</div>;
+        return <div className="text-center py-12">{t("Loading articles...")}</div>;
     }
 
     if (error) {
-        return <div>{error}</div>;
+        return <div className="text-center text-red-600 py-12">{error}</div>;
+    }
+
+    if (climateItems.length === 0) {
+        return (
+            <section className="py-16 bg-white" id="climate">
+                <div className="container mx-auto px-4 text-center">
+                    <SectionHeader title={t("Articles on climate change and its impact on agricultural crops")} />
+                    <p className="text-gray-600 text-lg mt-8">
+                        {t("No articles available at the moment. Please check back later.")}
+                    </p>
+                </div>
+            </section>
+        );
     }
 
     return (
@@ -43,7 +57,7 @@ const ClimateSection = () => {
                         <ServiceCard
                             key={item.id}
                             cardIndex={index}
-                            title={currentLang=="en"?item.title:item.arabicTitle}
+                            title={currentLang === "en" ? item.title : item.arabicTitle}
                             imageSrc={`${import.meta.env.VITE_API_URL_FRONT}${item.imageUrl}`}
                             variant={item.variant}
                             secondaryText={item.secondaryText}
