@@ -2,13 +2,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import { MessageCircle } from 'lucide-react';
 
 import Typewriter from 'typewriter-effect';
-<<<<<<< HEAD
 import backgroundsAPI from '../../services/BackgroundAPI';
 import ContactAPI from '../../services/contactsAPI';
 import { useTranslation } from 'react-i18next';
-=======
-import backgroundsAPI from '../../services/backgroundAPI';
->>>>>>> 188e74f1209066fa08c0f2bfcc627d0605395a38
 
 const ExpertSection = () => {
   const {t, i18n } = useTranslation();

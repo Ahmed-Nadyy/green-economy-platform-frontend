@@ -118,12 +118,12 @@ const Navbar = () => {
         {mobileMenuOpen && (
           <div className="md:hidden bg-green-600 mt-2 py-3 px-4 rounded-lg">
             <div className="flex flex-col space-y-3 text-right">
-              <Link to="/" className="text-white font-medium hover:text-green-200 border-b border-green-500 pb-2">الرئيسية</Link>
-              <Link to="/about" className="text-white font-medium hover:text-green-200 border-b border-green-500 pb-2">من نحن</Link>
-              <Link to="/services" className="text-white font-medium hover:text-green-200 border-b border-green-500 pb-2">خدماتنا</Link>
-              <Link to="/gallery" className="text-white font-medium hover:text-green-200 border-b border-green-500 pb-2">المعرض</Link>
-              <Link to="/jobs" className="text-white font-medium hover:text-green-200 border-b border-green-500 pb-2">فرص عمل</Link>
-              <Link to="/contact" className="text-white font-medium hover:text-green-200">تواصل معنا</Link>
+              <Link to="/" className="text-white font-medium hover:text-green-200 border-b border-green-500 pb-2">{t("Home")}</Link>
+              <Link to="/about" className="text-white font-medium hover:text-green-200 border-b border-green-500 pb-2">{t("About Us")}</Link>
+              <Link to="/services" className="text-white font-medium hover:text-green-200 border-b border-green-500 pb-2">{t("Our services")}</Link>
+              <Link to="/gallery" className="text-white font-medium hover:text-green-200 border-b border-green-500 pb-2">{t("Exhibition")}</Link>
+              <Link to="/jobs" className="text-white font-medium hover:text-green-200 border-b border-green-500 pb-2">{t("Job")}</Link>
+              <Link to="/contact" className="text-white font-medium hover:text-green-200">{t("Contact US")}</Link>
             </div>
           </div>
         )}
