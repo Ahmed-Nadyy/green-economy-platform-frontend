@@ -3,6 +3,7 @@ import galleryAPI from "../services/galleryAPI";
 import SectionHeader from "./Services/ui/SectionHeader";
 import { useTranslation } from "react-i18next";
 import Typewriter from 'typewriter-effect';
+<<<<<<< HEAD
 import backgroundsAPI from "../services/BackgroundAPI";
 function CustomYouTubePlayer({ videoId }) {
     const playerRef = useRef(null);
@@ -49,6 +50,9 @@ function CustomYouTubePlayer({ videoId }) {
 
     return <div id="yt-player" style={{ width: "100%", height: "500px" }} />;
   }
+=======
+import backgroundsAPI from "../services/backgroundAPI";
+>>>>>>> 188e74f1209066fa08c0f2bfcc627d0605395a38
 
 const GalleryPage = () => {
   // State for images

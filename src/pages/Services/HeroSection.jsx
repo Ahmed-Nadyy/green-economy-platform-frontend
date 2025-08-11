@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Typewriter from 'typewriter-effect';
-import backgroundsAPI from '../../services/BackgroundAPI';
+import backgroundsAPI from '../../services/backgroundAPI';
 
 const HeroSection = () => {
   const { t, i18n } = useTranslation();

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import SectionHeader from "./Services/ui/SectionHeader";
 import { useTranslation } from "react-i18next";
 import Typewriter from 'typewriter-effect';
-import backgroundsAPI from "../services/BackgroundAPI";
+import backgroundsAPI from "../services/backgroundAPI";
 
 const features = [
   {

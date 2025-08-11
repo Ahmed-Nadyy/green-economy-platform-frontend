@@ -4,8 +4,12 @@ import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai';
 import Typewriter from 'typewriter-effect';
+<<<<<<< HEAD
 import backgroundsAPI from "../services/BackgroundAPI";
 import { useInView } from 'react-intersection-observer';
+=======
+import backgroundsAPI from "../services/backgroundAPI";
+>>>>>>> 188e74f1209066fa08c0f2bfcc627d0605395a38
 
 const JobsPage = () => {
   const [formData, setFormData] = useState({

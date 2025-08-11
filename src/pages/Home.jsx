@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import Typewriter from "typewriter-effect";
 import PartnersAPI from "../services/partnersAPI";
 import MembersAPI from "../services/MembersAPI";
+<<<<<<< HEAD
 import backgroundsAPI from "../services/BackgroundAPI";
 import Loader from "../components/common/Loader"; // يمكنك إنشاء لودر بسيط كمكون
 import FounderSection from "../components/home/FounderSection";
@@ -14,6 +15,9 @@ const VisionSection = lazy(() => import("../components/home/VisionSection"));
 const GoalsSection = lazy(() => import("../components/home/GoalsSection"));
 const MembersSection = lazy(() => import("../components/home/MembersSection"));
 
+=======
+import backgroundsAPI from "../services/backgroundAPI";
+>>>>>>> 188e74f1209066fa08c0f2bfcc627d0605395a38
 const Home = () => {
   const { t, i18n } = useTranslation();
   const currentLang = i18n.language || "en";

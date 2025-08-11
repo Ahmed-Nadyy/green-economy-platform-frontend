@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import MembersAPI from '../../services/membersAPI';
+import MembersAPI from '../../services/MembersAPI';
 
 export default function MembersPage() {
   const [members, setMembers] = useState([]);

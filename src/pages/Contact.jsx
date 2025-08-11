@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Typewriter from 'typewriter-effect';
 import ContactAPI from "../services/contactsAPI";
-import backgroundsAPI from "../services/BackgroundAPI";
+import backgroundsAPI from "../services/backgroundAPI";
 
 const Contact = () => {
     const { t } = useTranslation();
